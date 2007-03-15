@@ -1,4 +1,4 @@
-require_once( "{{path}}/Lockldown.php" );
+require_once( "{{path}}/Lockdown.php" );
 
 # see Lockdown/README for instructions on configuration
 #
