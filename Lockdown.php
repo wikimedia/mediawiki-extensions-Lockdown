@@ -45,12 +45,20 @@ $wgSpecialPageLockdown = array();
 $wgHooks['userCan'][] = 'lockdownUserCan';
 
 function lockdownUserCan($title, $user, $action, &$result) {
-	global $wgNamespacePermissionLockdown, $wgSpecialPageLockdown;
+	global $wgNamespacePermissionLockdown, $wgSpecialPageLockdown, $wgWhitelistRead;
 	#print "<br>nsAccessUserCan(".$title->getPrefixedDBkey().", ".$user->getName().", $action)<br>\n";
 
 	$result = NULL;
 
+	//don't impose extra restrictions on UI pages
 	if ($title->isCssJsSubpage()) return true;
+
+	if ($action == 'read' && $wgWhitelistRead) {
+		//don't impose read restrictions on whitelisted pages
+		if (in_array($title->getPrefixedText(), $wgWhitelistRead)) {
+			return true;
+		}
+	}
 
 	$groups = NULL;
 	$ns = $title->getNamespace();
