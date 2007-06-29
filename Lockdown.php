@@ -106,4 +106,3 @@ function lockdownUserCan($title, $user, $action, &$result) {
 	}
 }
 
-?>
