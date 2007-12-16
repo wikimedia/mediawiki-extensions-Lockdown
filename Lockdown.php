@@ -11,8 +11,8 @@
  */
 
 /*
-* WARNING: you can use this extension to deny read access to some namespaces. Keep in mind that this
-* may be circumvented in several ways. This extension doesn't try to
+* WARNING: you can use this extension to deny read access to some namespaces. Keep in mind that this 
+* may be circumvented in several ways. This extension doesn't try to 
 * plug such holes. Also note that pages that are not readable will still be shown in listings,
 * such as the search page, categories, etc.
 *
@@ -26,16 +26,15 @@
 * NOTE: you cannot GRANT access to things forbidden by $wgGroupPermissions. You can only DENY access
 * granted there.
 */
-
+ 
 if( !defined( 'MEDIAWIKI' ) ) {
 	echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
 	die( 1 );
 }
 
-$wgExtensionCredits['other'][] = array(
-	'name' => 'Lockdown',
-	'version' => '1.1',
-	'author' => 'Daniel Kinzler',
+$wgExtensionCredits['other'][] = array( 
+	'name' => 'Lockdown', 
+	'author' => 'Daniel Kinzler', 
 	'url' => 'http://mediawiki.org/wiki/Extension:Lockdown',
 	'description' => 'per-namespace group permissions',
 );
@@ -106,3 +105,4 @@ function lockdownUserCan($title, $user, $action, &$result) {
 		return false;
 	}
 }
+
