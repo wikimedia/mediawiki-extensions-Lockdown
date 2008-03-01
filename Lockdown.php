@@ -46,7 +46,7 @@ $wgHooks['userCan'][] = 'lockdownUserCan';
 
 function lockdownUserCan($title, $user, $action, &$result) {
 	global $wgNamespacePermissionLockdown, $wgSpecialPageLockdown, $wgWhitelistRead;
-	#print "<br>nsAccessUserCan(".$title->getPrefixedDBkey().", ".$user->getName().", $action)<br>\n";
+	#print "<br />nsAccessUserCan(".$title->getPrefixedDBkey().", ".$user->getName().", $action)<br />\n";
 
 	$result = NULL;
 
@@ -83,7 +83,7 @@ function lockdownUserCan($title, $user, $action, &$result) {
 
 	if (!$groups) return true;
 
-	#print "<br>nsAccessUserCan(".$title->getPrefixedDBkey().", ".$user->getName().", $action)<br>\n";
+	#print "<br />nsAccessUserCan(".$title->getPrefixedDBkey().", ".$user->getName().", $action)<br />\n";
 	#print_r($groups);
 
 	$ugroups = $user->getEffectiveGroups();
@@ -93,13 +93,13 @@ function lockdownUserCan($title, $user, $action, &$result) {
 	#print_r($match);
 
 	if ($match) {
-		#print "<br>PASS<br>\n";
+		#print "<br />PASS<br />\n";
 		#group is allowed - keep processing
 		$result = NULL;
 		return true;
 	}
 	else {
-		#print "<br>DENY<br>\n";
+		#print "<br />DENY<br />\n";
 		#group is denied - abort
 		$result = false;
 		return false;
