@@ -33,6 +33,7 @@ if( !defined( 'MEDIAWIKI' ) ) {
 }
 
 $wgExtensionCredits['other'][] = array( 
+	'path' => __FILE__,
 	'name' => 'Lockdown', 
 	'author' => 'Daniel Kinzler', 
 	'url' => 'http://mediawiki.org/wiki/Extension:Lockdown',
