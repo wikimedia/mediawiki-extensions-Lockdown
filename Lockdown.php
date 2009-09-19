@@ -7,7 +7,7 @@
  * @subpackage Extensions
  * @author Daniel Kinzler, brightbyte.de
  * @copyright © 2007 Daniel Kinzler
- * @licence GNU General Public Licence 2.0 or later
+ * @license GNU General Public Licence 2.0 or later
  */
 
 /*
@@ -27,19 +27,21 @@
 * granted there.
 */
  
-if( !defined( 'MEDIAWIKI' ) ) {
+if ( !defined( 'MEDIAWIKI' ) ) {
 	echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
 	die( 1 );
 }
 
-$wgExtensionCredits['other'][] = array( 
+$wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
-	'name' => 'Lockdown', 
-	'author' => 'Daniel Kinzler', 
+	'name' => 'Lockdown',
+	'author' => 'Daniel Kinzler',
 	'url' => 'http://mediawiki.org/wiki/Extension:Lockdown',
-	'description' => 'per-namespace group permissions',
+	'description' => 'Per namespace group permissions',
+	'descriptionmsg' => 'lockdown-desc',
 );
 
+$wgExtensionMessagesFiles['Lockdown'] = $root . 'Lockdown.i18n.php';
 $wgNamespacePermissionLockdown = array();
 $wgSpecialPageLockdown = array();
 $wgActionLockdown = array();
@@ -47,32 +49,32 @@ $wgActionLockdown = array();
 $wgHooks['userCan'][] = 'lockdownUserCan';
 $wgHooks['MediaWikiPerformAction'][] = 'lockdownMediawikiPerformAction';
 
-function lockdownUserCan($title, $user, $action, &$result) {
+function lockdownUserCan( $title, $user, $action, &$result ) {
 	global $wgNamespacePermissionLockdown, $wgSpecialPageLockdown, $wgWhitelistRead;
-	#print "<br />nsAccessUserCan(".$title->getPrefixedDBkey().", ".$user->getName().", $action)<br />\n";
+	# print "<br />nsAccessUserCan(".$title->getPrefixedDBkey().", ".$user->getName().", $action)<br />\n";
 
 	$result = NULL;
 
-	//don't impose extra restrictions on UI pages
-	if ($title->isCssJsSubpage()) return true;
+	// don't impose extra restrictions on UI pages
+	if ( $title->isCssJsSubpage() ) return true;
 
-	if ($action == 'read' && $wgWhitelistRead) {
-		//don't impose read restrictions on whitelisted pages
-		if (in_array($title->getPrefixedText(), $wgWhitelistRead)) {
+	if ( $action == 'read' && $wgWhitelistRead ) {
+		// don't impose read restrictions on whitelisted pages
+		if ( in_array( $title->getPrefixedText(), $wgWhitelistRead ) ) {
 			return true;
 		}
 	}
 
 	$groups = NULL;
 	$ns = $title->getNamespace();
-	if( NS_SPECIAL == $ns ) {
-		if ($action != 'read') {
+	if ( NS_SPECIAL == $ns ) {
+		if ( $action != 'read' ) {
 			$result = false;
 			return true;
 		}
 		else {
-			foreach ($wgSpecialPageLockdown as $page => $g) {
-				if (!$title->isSpecial($page)) continue;
+			foreach ( $wgSpecialPageLockdown as $page => $g ) {
+				if ( !$title->isSpecial( $page ) ) continue;
 				$groups = $g;
 				break;
 			}
@@ -87,30 +89,30 @@ function lockdownUserCan($title, $user, $action, &$result) {
 	if ( $groups === NULL ) return true;
 	if ( count( $groups ) == 0 ) return false;
 
-	#print "<br />nsAccessUserCan(".$title->getPrefixedDBkey().", ".$user->getName().", $action)<br />\n";
-	#print_r($groups);
+	# print "<br />nsAccessUserCan(".$title->getPrefixedDBkey().", ".$user->getName().", $action)<br />\n";
+	# print_r($groups);
 
 	$ugroups = $user->getEffectiveGroups();
-	#print_r($ugroups);
+	# print_r($ugroups);
 
-	$match = array_intersect($ugroups, $groups);
-	#print_r($match);
+	$match = array_intersect( $ugroups, $groups );
+	# print_r($match);
 
-	if ($match) {
-		#print "<br />PASS<br />\n";
-		#group is allowed - keep processing
+	if ( $match ) {
+		# print "<br />PASS<br />\n";
+		# group is allowed - keep processing
 		$result = NULL;
 		return true;
 	}
 	else {
-		#print "<br />DENY<br />\n";
-		#group is denied - abort
+		# print "<br />DENY<br />\n";
+		# group is denied - abort
 		$result = false;
 		return false;
 	}
 }
 
-function lockdownMediawikiPerformAction ($output, $article, $title, $user, $request, $wiki) {
+function lockdownMediawikiPerformAction ( $output, $article, $title, $user, $request, $wiki ) {
 	global $wgActionLockdown;
 
 	$action = $wiki->getVal( 'Action' );
@@ -122,8 +124,8 @@ function lockdownMediawikiPerformAction ($output, $article, $title, $user, $requ
 	if ( count( $groups ) == 0 ) return false;
 
 	$ugroups = $user->getEffectiveGroups();
-	$match = array_intersect($ugroups, $groups);
-	
+	$match = array_intersect( $ugroups, $groups );
+
 	if ( $match ) return true;
 	else return false;
 }
