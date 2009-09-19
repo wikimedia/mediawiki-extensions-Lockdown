@@ -15,3 +15,10 @@ $messages['en'] = array(
 	'lockdown-desc' => 'Per namespace group permissions',
 );
 
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'lockdown-desc' => 'Groepsrechten per naamruimte',
+);
+
