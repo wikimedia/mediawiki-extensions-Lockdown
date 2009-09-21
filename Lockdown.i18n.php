@@ -23,10 +23,11 @@ $messages['qqq'] = array(
 );
 
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+ * @author EugeneZelenko
  * @author Jim-by
  */
 $messages['be-tarask'] = array(
-	'lockdown-desc' => 'Групавыя дазволы па прасторам назваў',
+	'lockdown-desc' => 'Групавыя дазволы па прасторах назваў',
 );
 
 /** Breton (Brezhoneg)
@@ -34,6 +35,20 @@ $messages['be-tarask'] = array(
  */
 $messages['br'] = array(
 	'lockdown-desc' => 'Aotreoù moned dre esaouenn anv',
+);
+
+/** Lower Sorbian (Dolnoserbski)
+ * @author Michawiki
+ */
+$messages['dsb'] = array(
+	'lockdown-desc' => 'Kupkowe pšawa na mjenjowy rum',
+);
+
+/** Spanish (Español)
+ * @author Crazymadlover
+ */
+$messages['es'] = array(
+	'lockdown-desc' => 'Permisos de grupo por nombre de espacio',
 );
 
 /** French (Français)
@@ -48,6 +63,13 @@ $messages['fr'] = array(
  */
 $messages['gl'] = array(
 	'lockdown-desc' => 'Permisos de acceso por espazo de nomes',
+);
+
+/** Swiss German (Alemannisch)
+ * @author Als-Holder
+ */
+$messages['gsw'] = array(
+	'lockdown-desc' => 'Grupperächt pro Namensruum',
 );
 
 /** Upper Sorbian (Hornjoserbsce)
@@ -104,5 +126,12 @@ $messages['pms'] = array(
  */
 $messages['roa-tara'] = array(
 	'lockdown-desc' => 'Permesse pe le gruppe de le namespace',
+);
+
+/** Russian (Русский)
+ * @author Александр Сигачёв
+ */
+$messages['ru'] = array(
+	'lockdown-desc' => 'Групповые права по пространствам имён',
 );
 
