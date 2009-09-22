@@ -37,6 +37,13 @@ $messages['br'] = array(
 	'lockdown-desc' => 'Aotreoù moned dre esaouenn anv',
 );
 
+/** Bosnian (Bosanski)
+ * @author CERminator
+ */
+$messages['bs'] = array(
+	'lockdown-desc' => 'Po dopuštenjima grupa imenskih prostora',
+);
+
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
