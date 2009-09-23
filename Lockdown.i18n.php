@@ -53,9 +53,10 @@ $messages['dsb'] = array(
 
 /** Spanish (Español)
  * @author Crazymadlover
+ * @author McDutchie
  */
 $messages['es'] = array(
-	'lockdown-desc' => 'Permisos de grupo por nombre de espacio',
+	'lockdown-desc' => 'Permisos de grupo por espacio de nombres',
 );
 
 /** French (Français)
@@ -91,6 +92,13 @@ $messages['hsb'] = array(
  */
 $messages['hu'] = array(
 	'lockdown-desc' => 'Névterenkénti csoportjogosultságok',
+);
+
+/** Interlingua (Interlingua)
+ * @author McDutchie
+ */
+$messages['ia'] = array(
+	'lockdown-desc' => 'Permissiones de gruppo per spatio de nomines',
 );
 
 /** Japanese (日本語)
