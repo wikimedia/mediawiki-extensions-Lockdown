@@ -51,6 +51,13 @@ $messages['dsb'] = array(
 	'lockdown-desc' => 'Kupkowe pšawa na mjenjowy rum',
 );
 
+/** Greek (Ελληνικά)
+ * @author Omnipaedista
+ */
+$messages['el'] = array(
+	'lockdown-desc' => 'Άδειες πρόσβασεις ανά ονοματικό χώρο',
+);
+
 /** Spanish (Español)
  * @author Crazymadlover
  * @author McDutchie
