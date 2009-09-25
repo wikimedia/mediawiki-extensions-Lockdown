@@ -87,6 +87,13 @@ $messages['gsw'] = array(
 	'lockdown-desc' => 'Grupperächt pro Namensruum',
 );
 
+/** Hebrew (עברית)
+ * @author Rotemliss
+ */
+$messages['he'] = array(
+	'lockdown-desc' => 'הרשאות קבוצה לפי מרחב שם',
+);
+
 /** Upper Sorbian (Hornjoserbsce)
  * @author Michawiki
  */
