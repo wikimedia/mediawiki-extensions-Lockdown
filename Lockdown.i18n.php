@@ -115,6 +115,13 @@ $messages['ia'] = array(
 	'lockdown-desc' => 'Permissiones de gruppo per spatio de nomines',
 );
 
+/** Indonesian (Bahasa Indonesia)
+ * @author Bennylin
+ */
+$messages['id'] = array(
+	'lockdown-desc' => 'Per hak akses grup ruang nama',
+);
+
 /** Japanese (日本語)
  * @author Fryed-peach
  */
