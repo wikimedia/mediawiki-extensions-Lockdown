@@ -150,6 +150,13 @@ $messages['nl'] = array(
 	'lockdown-desc' => 'Groepsrechten per naamruimte',
 );
 
+/** Polish (Polski)
+ * @author Sp5uhe
+ */
+$messages['pl'] = array(
+	'lockdown-desc' => 'Uprawnienia grup do przestrzeni nazw',
+);
+
 /** Piedmontese (Piemontèis)
  * @author Dragonòt
  */
