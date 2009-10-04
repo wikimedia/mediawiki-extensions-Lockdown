@@ -164,6 +164,13 @@ $messages['pms'] = array(
 	'lockdown-desc' => 'Përmess për partìe dë spassi nominaj',
 );
 
+/** Portuguese (Português)
+ * @author Indech
+ */
+$messages['pt'] = array(
+	'lockdown-desc' => 'Por permissões grupais de domínio',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
