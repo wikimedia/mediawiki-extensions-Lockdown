@@ -150,6 +150,13 @@ $messages['nl'] = array(
 	'lockdown-desc' => 'Groepsrechten per naamruimte',
 );
 
+/** Occitan (Occitan)
+ * @author Cedric31
+ */
+$messages['oc'] = array(
+	'lockdown-desc' => "Permissions d'accès per espaci de noms",
+);
+
 /** Polish (Polski)
  * @author Sp5uhe
  */
