@@ -22,6 +22,13 @@ $messages['qqq'] = array(
 	'lockdown-desc' => '{{desc}}',
 );
 
+/** Afrikaans (Afrikaans)
+ * @author Naudefj
+ */
+$messages['af'] = array(
+	'lockdown-desc' => 'Groepsregte per naamruimte',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
