@@ -150,6 +150,13 @@ $messages['lb'] = array(
 	'lockdown-desc' => 'Gruppen-Autorisatioune pro Nummraum',
 );
 
+/** Macedonian (Македонски)
+ * @author Bjankuloski06
+ */
+$messages['mk'] = array(
+	'lockdown-desc' => 'Групни дозволи по именски простор',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
