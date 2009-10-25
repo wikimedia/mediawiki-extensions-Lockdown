@@ -41,7 +41,7 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg' => 'lockdown-desc',
 );
 
-$wgExtensionMessagesFiles['Lockdown'] = $root . 'Lockdown.i18n.php';
+$wgExtensionMessagesFiles['Lockdown'] = dirname(__FILE__) . '/Lockdown.i18n.php';
 $wgNamespacePermissionLockdown = array();
 $wgSpecialPageLockdown = array();
 $wgActionLockdown = array();
