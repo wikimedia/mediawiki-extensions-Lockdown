@@ -206,3 +206,10 @@ $messages['ru'] = array(
 	'lockdown-desc' => 'Групповые права по пространствам имён',
 );
 
+/** Slovak (Slovenčina)
+ * @author Helix84
+ */
+$messages['sk'] = array(
+	'lockdown-desc' => 'Skupinové oprávnenia špecifické podľa menného priestoru',
+);
+
