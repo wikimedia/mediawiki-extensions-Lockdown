@@ -213,3 +213,10 @@ $messages['sk'] = array(
 	'lockdown-desc' => 'Skupinové oprávnenia špecifické podľa menného priestoru',
 );
 
+/** Ukrainian (Українська)
+ * @author Prima klasy4na
+ */
+$messages['uk'] = array(
+	'lockdown-desc' => 'Групові права за просторами назв',
+);
+
