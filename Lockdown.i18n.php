@@ -213,6 +213,13 @@ $messages['sk'] = array(
 	'lockdown-desc' => 'Skupinové oprávnenia špecifické podľa menného priestoru',
 );
 
+/** Turkish (Türkçe)
+ * @author Vito Genovese
+ */
+$messages['tr'] = array(
+	'lockdown-desc' => 'Alan adlarına göre grup izinleri',
+);
+
 /** Ukrainian (Українська)
  * @author Prima klasy4na
  */
