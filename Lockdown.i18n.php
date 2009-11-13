@@ -213,6 +213,13 @@ $messages['sk'] = array(
 	'lockdown-desc' => 'Skupinové oprávnenia špecifické podľa menného priestoru',
 );
 
+/** Serbian Cyrillic ekavian (Српски (ћирилица))
+ * @author Михајло Анђелковић
+ */
+$messages['sr-ec'] = array(
+	'lockdown-desc' => 'Групне дозволе по именским просторима',
+);
+
 /** Turkish (Türkçe)
  * @author Vito Genovese
  */
