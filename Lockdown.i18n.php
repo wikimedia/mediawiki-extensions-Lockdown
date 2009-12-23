@@ -29,6 +29,13 @@ $messages['af'] = array(
 	'lockdown-desc' => 'Groepsregte per naamruimte',
 );
 
+/** Arabic (العربية)
+ * @author Meno25
+ */
+$messages['ar'] = array(
+	'lockdown-desc' => 'سماحات لكل مجموعة نطاق',
+);
+
 /** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
  * @author EugeneZelenko
  * @author Jim-by
