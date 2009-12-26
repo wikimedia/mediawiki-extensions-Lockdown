@@ -171,6 +171,13 @@ $messages['nl'] = array(
 	'lockdown-desc' => 'Groepsrechten per naamruimte',
 );
 
+/** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
+ * @author Nghtwlkr
+ */
+$messages['no'] = array(
+	'lockdown-desc' => 'Per navneromsgruppetillatelser',
+);
+
 /** Occitan (Occitan)
  * @author Cedric31
  */
