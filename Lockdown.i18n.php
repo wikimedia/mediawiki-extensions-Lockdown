@@ -234,6 +234,13 @@ $messages['sr-ec'] = array(
 	'lockdown-desc' => 'Групне дозволе по именским просторима',
 );
 
+/** Serbian Latin ekavian (Srpski (latinica))
+ * @author Liangent
+ */
+$messages['sr-el'] = array(
+	'lockdown-desc' => 'Grupne dozvole po imenskim prostorima',
+);
+
 /** Turkish (Türkçe)
  * @author Vito Genovese
  */
