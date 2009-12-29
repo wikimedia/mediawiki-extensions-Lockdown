@@ -58,6 +58,13 @@ $messages['bs'] = array(
 	'lockdown-desc' => 'Po dopuštenjima grupa imenskih prostora',
 );
 
+/** German (Deutsch)
+ * @author Imre
+ */
+$messages['de'] = array(
+	'lockdown-desc' => 'Gruppenrechte nach Namensraum',
+);
+
 /** Lower Sorbian (Dolnoserbski)
  * @author Michawiki
  */
@@ -239,6 +246,13 @@ $messages['sr-ec'] = array(
  */
 $messages['sr-el'] = array(
 	'lockdown-desc' => 'Grupne dozvole po imenskim prostorima',
+);
+
+/** Swedish (Svenska)
+ * @author Per
+ */
+$messages['sv'] = array(
+	'lockdown-desc' => 'Grupprättigheter per namnrymd',
 );
 
 /** Turkish (Türkçe)
