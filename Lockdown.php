@@ -53,7 +53,7 @@ function lockdownUserCan( $title, $user, $action, &$result ) {
 	global $wgNamespacePermissionLockdown, $wgSpecialPageLockdown, $wgWhitelistRead;
 	# print "<br />nsAccessUserCan(".$title->getPrefixedDBkey().", ".$user->getName().", $action)<br />\n";
 
-	$result = NULL;
+	$result = null;
 
 	// don't impose extra restrictions on UI pages
 	if ( $title->isCssJsSubpage() ) return true;
@@ -65,7 +65,7 @@ function lockdownUserCan( $title, $user, $action, &$result ) {
 		}
 	}
 
-	$groups = NULL;
+	$groups = null;
 	$ns = $title->getNamespace();
 	if ( NS_SPECIAL == $ns ) {
 		if ( $action != 'read' ) {
@@ -82,11 +82,11 @@ function lockdownUserCan( $title, $user, $action, &$result ) {
 	}
 	else {
 		$groups = @$wgNamespacePermissionLockdown[$ns][$action];
-		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown['*'][$action];
-		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown[$ns]['*'];
+		if ( $groups === null ) $groups = @$wgNamespacePermissionLockdown['*'][$action];
+		if ( $groups === null ) $groups = @$wgNamespacePermissionLockdown[$ns]['*'];
 	}
 
-	if ( $groups === NULL ) return true;
+	if ( $groups === null ) return true;
 	if ( count( $groups ) == 0 ) return false;
 
 	# print "<br />nsAccessUserCan(".$title->getPrefixedDBkey().", ".$user->getName().", $action)<br />\n";
@@ -101,7 +101,7 @@ function lockdownUserCan( $title, $user, $action, &$result ) {
 	if ( $match ) {
 		# print "<br />PASS<br />\n";
 		# group is allowed - keep processing
-		$result = NULL;
+		$result = null;
 		return true;
 	}
 	else {
@@ -120,7 +120,7 @@ function lockdownMediawikiPerformAction ( $output, $article, $title, $user, $req
 	if ( !isset( $wgActionLockdown[$action] ) ) return true;
 
 	$groups = $wgActionLockdown[$action];
-	if ( $groups === NULL ) return true;
+	if ( $groups === null ) return true;
 	if ( count( $groups ) == 0 ) return false;
 
 	$ugroups = $user->getEffectiveGroups();
