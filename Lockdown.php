@@ -20,8 +20,10 @@
 * - transcluding as template (can't really be fixed without disabling inclusion for specific namespaces;
 *                            that could be done by adding a hook to Parser::fetchTemplate)
 * - Special:export  (easily fixed using $wgSpecialPageLockdown)
-* - the search page may show excerpts from hidden pages.
-* - supplying oldid=<revisionfromhiddenpage> may work in somve versions of mediawiki. Same with diff, etc.
+* - the search page may find text and show excerpts from hidden pages (should be fixed from MediaWiki 1.16). 
+* Some search messages may reveal the page existance by producing links to it (MediaWiki:searchsubtitle, 
+* MediaWiki:noexactmatch, MediaWiki:searchmenu-exists, MediaWiki:searchmenu-new...).
+* - supplying oldid=<revisionfromhiddenpage> may work in some versions of mediawiki. Same with diff, etc.
 *
 * NOTE: you cannot GRANT access to things forbidden by $wgGroupPermissions. You can only DENY access
 * granted there.
@@ -34,8 +36,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
-	'name' => 'Lockdown',
-	'author' => 'Daniel Kinzler',
+	'name' => 'Lockdown', 
+	'author' => array( 'Daniel Kinzler', 'Platonides'), 
 	'url' => 'http://mediawiki.org/wiki/Extension:Lockdown',
 	'description' => 'Per namespace group permissions',
 	'descriptionmsg' => 'lockdown-desc',
@@ -48,6 +50,9 @@ $wgActionLockdown = array();
 
 $wgHooks['userCan'][] = 'lockdownUserCan';
 $wgHooks['MediaWikiPerformAction'][] = 'lockdownMediawikiPerformAction';
+$wgHooks['SearchableNamespaces'][] = 'lockdownSearchableNamespaces';
+$wgHooks['SearchGetNearMatchComplete'][] = 'lockdownSearchGetNearMatchComplete';
+$wgHooks['SearchEngineReplacePrefixesComplete'][] = 'lockdownSearchEngineReplacePrefixesComplete';
 
 function lockdownUserCan( $title, $user, $action, &$result ) {
 	global $wgNamespacePermissionLockdown, $wgSpecialPageLockdown, $wgWhitelistRead;
@@ -128,4 +133,74 @@ function lockdownMediawikiPerformAction ( $output, $article, $title, $user, $req
 
 	if ( $match ) return true;
 	else return false;
+}
+
+function lockdownSearchableNamespaces($arr) {
+	global $wgUser, $wgNamespacePermissionLockdown;
+	$ugroups = $wgUser->getEffectiveGroups();
+
+	foreach ( $arr as $ns => $name ) {
+		$groups = @$wgNamespacePermissionLockdown[$ns]['read'];
+		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown['*']['read'];
+		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown[$ns]['*'];
+	
+		if ( $groups === NULL ) continue;
+		
+		if ( ( count( $groups ) == 0 ) || !array_intersect($ugroups, $groups) ) {
+			unset( $arr[$ns] );
+		}
+	}
+	return true;
+}
+
+function lockdownTitle(&$title) {
+	if ( is_object($title) ) {
+		global $wgUser, $wgNamespacePermissionLockdown;
+		$ugroups = $wgUser->getEffectiveGroups();
+	
+		$groups = @$wgNamespacePermissionLockdown[$title->getNamespace()]['read'];
+		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown['*']['read'];
+		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown[$title->getNamespace()]['*'];
+	
+		if ( $groups === NULL ) continue;
+		
+		if ( ( count( $groups ) == 0 ) || !array_intersect($ugroups, $groups) ) {
+			$title = null;
+			return false;
+		}		
+	}
+	return true;	
+}
+
+#Stop a Go search for a hidden title to send you to the login required page. Will show a no such page message instead.
+function lockdownSearchGetNearMatchComplete($searchterm, $title) {
+	return lockdownTitle( $title );
+}
+
+#Protect against namespace prefixes, explicit ones and <searchall> ('all:'-queries).
+function lockdownSearchEngineReplacePrefixesComplete($searchEngine, $query, $parsed) {
+	global $wgUser, $wgNamespacePermissionLockdown;
+	if ( $searchEngine->namespaces === null ) { #null means all namespaces.
+		$searchEngine->namespaces = array_keys( SearchEngine::searchableNamespaces() ); #Use the namespaces... filtered
+		return true;
+	}
+			
+	$ugroups = $wgUser->getEffectiveGroups();
+
+	foreach ( $searchEngine->namespaces as $key => $ns ) {
+		$groups = @$wgNamespacePermissionLockdown[$ns]['read'];
+		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown['*']['read'];
+		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown[$ns]['*'];
+	
+		if ( $groups === NULL ) continue;
+		
+		if ( ( count( $groups ) == 0 ) || !array_intersect($ugroups, $groups) ) {
+			unset( $searchEngine->namespaces[$key] );
+		}
+	}
+	
+	if (count($searchEngine->namespaces) == 0) {
+		$searchEngine->namespaces = array_keys( SearchEngine::searchableNamespaces() );
+	}
+	return true;
 }
