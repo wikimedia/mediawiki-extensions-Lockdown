@@ -87,6 +87,13 @@ $messages['es'] = array(
 	'lockdown-desc' => 'Permisos de grupo por espacio de nombres',
 );
 
+/** Finnish (Suomi)
+ * @author Centerlink
+ */
+$messages['fi'] = array(
+	'lockdown-desc' => 'Ryhmäoikeudet nimiavaruuksittain',
+);
+
 /** French (Français)
  * @author IAlex
  */
