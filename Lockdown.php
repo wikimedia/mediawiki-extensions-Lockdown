@@ -39,7 +39,6 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'Lockdown', 
 	'author' => array( 'Daniel Kinzler', 'Platonides'), 
 	'url' => 'http://mediawiki.org/wiki/Extension:Lockdown',
-	'description' => 'Per namespace group permissions',
 	'descriptionmsg' => 'lockdown-desc',
 );
 
