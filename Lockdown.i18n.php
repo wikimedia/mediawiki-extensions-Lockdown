@@ -58,6 +58,13 @@ $messages['bs'] = array(
 	'lockdown-desc' => 'Po dopuštenjima grupa imenskih prostora',
 );
 
+/** Catalan (Català)
+ * @author Paucabot
+ */
+$messages['ca'] = array(
+	'lockdown-desc' => 'Permisos de grup per espai de noms',
+);
+
 /** German (Deutsch)
  * @author Imre
  */
