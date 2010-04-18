@@ -157,6 +157,13 @@ $messages['id'] = array(
 	'lockdown-desc' => 'Per hak akses grup ruang nama',
 );
 
+/** Italian (Italiano)
+ * @author Civvì
+ */
+$messages['it'] = array(
+	'lockdown-desc' => 'Autorizzazioni di gruppo per namespace',
+);
+
 /** Japanese (日本語)
  * @author Fryed-peach
  */
