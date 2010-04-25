@@ -171,7 +171,7 @@ $messages['ja'] = array(
 	'lockdown-desc' => '名前空間ごとのグループ許可',
 );
 
-/** Ripoarisch (Ripoarisch)
+/** Colognian (Ripoarisch)
  * @author Purodha
  */
 $messages['ksh'] = array(
