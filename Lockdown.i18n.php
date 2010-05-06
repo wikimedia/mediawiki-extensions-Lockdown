@@ -276,6 +276,13 @@ $messages['sv'] = array(
 	'lockdown-desc' => 'Grupprättigheter per namnrymd',
 );
 
+/** Telugu (తెలుగు)
+ * @author Veeven
+ */
+$messages['te'] = array(
+	'lockdown-desc' => 'పేరుబరి వారీగా గుంపు అనుమతులు',
+);
+
 /** Turkish (Türkçe)
  * @author Vito Genovese
  */
