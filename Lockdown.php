@@ -161,7 +161,7 @@ function lockdownTitle(&$title) {
 		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown['*']['read'];
 		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown[$title->getNamespace()]['*'];
 	
-		if ( $groups === NULL ) continue;
+		if ( $groups === NULL ) return false;
 		
 		if ( ( count( $groups ) == 0 ) || !array_intersect($ugroups, $groups) ) {
 			$title = null;
