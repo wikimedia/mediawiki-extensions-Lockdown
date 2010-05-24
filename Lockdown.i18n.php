@@ -283,6 +283,13 @@ $messages['te'] = array(
 	'lockdown-desc' => 'పేరుబరి వారీగా గుంపు అనుమతులు',
 );
 
+/** Tagalog (Tagalog)
+ * @author AnakngAraw
+ */
+$messages['tl'] = array(
+	'lockdown-desc' => 'Ayon sa mga pagpayag ng pangkat na pampuwang ng pangalan',
+);
+
 /** Turkish (Türkçe)
  * @author Vito Genovese
  */
