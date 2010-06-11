@@ -234,6 +234,13 @@ $messages['pt'] = array(
 	'lockdown-desc' => 'Por permissões grupais de domínio',
 );
 
+/** Brazilian Portuguese (Português do Brasil)
+ * @author Giro720
+ */
+$messages['pt-br'] = array(
+	'lockdown-desc' => 'Permissões de grupo por domínio',
+);
+
 /** Tarandíne (Tarandíne)
  * @author Joetaras
  */
