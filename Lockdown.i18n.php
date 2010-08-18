@@ -229,9 +229,10 @@ $messages['pms'] = array(
 
 /** Portuguese (Português)
  * @author Indech
+ * @author Waldir
  */
 $messages['pt'] = array(
-	'lockdown-desc' => 'Por permissões grupais de domínio',
+	'lockdown-desc' => 'Permissões de grupo por domínio',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
