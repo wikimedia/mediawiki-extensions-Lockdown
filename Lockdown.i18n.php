@@ -228,11 +228,12 @@ $messages['pms'] = array(
 );
 
 /** Portuguese (Português)
+ * @author Hamilton Abreu
  * @author Indech
  * @author Waldir
  */
 $messages['pt'] = array(
-	'lockdown-desc' => 'Permissões de grupo por domínio',
+	'lockdown-desc' => 'Permissões de grupo por espaço nominal',
 );
 
 /** Brazilian Portuguese (Português do Brasil)
