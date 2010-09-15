@@ -65,6 +65,13 @@ $messages['ca'] = array(
 	'lockdown-desc' => 'Permisos de grup per espai de noms',
 );
 
+/** Czech (Česky)
+ * @author Mormegil
+ */
+$messages['cs'] = array(
+	'lockdown-desc' => 'Oprávnění pro skupiny uživatelů závisející na jmenném prostoru',
+);
+
 /** German (Deutsch)
  * @author Imre
  */
