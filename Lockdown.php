@@ -119,7 +119,7 @@ function lockdownUserCan( $title, $user, $action, &$result ) {
 function lockdownMediawikiPerformAction ( $output, $article, $title, $user, $request, $wiki ) {
 	global $wgActionLockdown;
 
-	$action = $request->getVal( 'action', 'view' );
+	$action = $wiki->getAction( $request );
 
 	if ( !isset( $wgActionLockdown[$action] ) ) return true;
 
