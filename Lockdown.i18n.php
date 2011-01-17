@@ -327,8 +327,9 @@ $messages['zh-hans'] = array(
 
 /** Traditional Chinese (‪中文(繁體)‬)
  * @author Frankou
+ * @author Mark85296341
  */
 $messages['zh-hant'] = array(
-	'lockdown-desc' => '每個命名空間組的權限',
+	'lockdown-desc' => '每個命名空間群組的權限',
 );
 
