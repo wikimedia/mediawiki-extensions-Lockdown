@@ -36,7 +36,7 @@ $messages['ar'] = array(
 	'lockdown-desc' => 'سماحات لكل مجموعة نطاق',
 );
 
-/** Belarusian (Taraškievica orthography) (Беларуская (тарашкевіца))
+/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -271,14 +271,14 @@ $messages['sk'] = array(
 	'lockdown-desc' => 'Skupinové oprávnenia špecifické podľa menného priestoru',
 );
 
-/** Serbian Cyrillic ekavian (Српски (ћирилица))
+/** Serbian Cyrillic ekavian (‪Српски (ћирилица)‬)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'lockdown-desc' => 'Групне дозволе по именским просторима',
 );
 
-/** Serbian Latin ekavian (Srpski (latinica))
+/** Serbian Latin ekavian (‪Srpski (latinica)‬)
  * @author Liangent
  */
 $messages['sr-el'] = array(
