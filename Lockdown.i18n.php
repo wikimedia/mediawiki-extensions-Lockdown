@@ -74,9 +74,10 @@ $messages['cs'] = array(
 
 /** German (Deutsch)
  * @author Imre
+ * @author Kghbln
  */
 $messages['de'] = array(
-	'lockdown-desc' => 'Gruppenrechte nach Namensraum',
+	'lockdown-desc' => 'Ermöglicht die namensraumspezifische Vergaben von Benutzergruppenberechtigungen',
 );
 
 /** Lower Sorbian (Dolnoserbski)
