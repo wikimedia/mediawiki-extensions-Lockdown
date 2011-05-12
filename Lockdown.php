@@ -60,7 +60,9 @@ function lockdownUserCan( $title, $user, $action, &$result ) {
 	$result = null;
 
 	// don't impose extra restrictions on UI pages
-	if ( $title->isCssJsSubpage() ) return true;
+	if ( $title->isCssJsSubpage() ) {
+		return true;
+	}
 
 	if ( $action == 'read' && $wgWhitelistRead ) {
 		// don't impose read restrictions on whitelisted pages
@@ -75,8 +77,7 @@ function lockdownUserCan( $title, $user, $action, &$result ) {
 		if ( $action != 'read' ) {
 			$result = false;
 			return true;
-		}
-		else {
+		} else {
 			foreach ( $wgSpecialPageLockdown as $page => $g ) {
 				if ( !$title->isSpecial( $page ) ) continue;
 				$groups = $g;
@@ -86,12 +87,20 @@ function lockdownUserCan( $title, $user, $action, &$result ) {
 	}
 	else {
 		$groups = @$wgNamespacePermissionLockdown[$ns][$action];
-		if ( $groups === null ) $groups = @$wgNamespacePermissionLockdown['*'][$action];
-		if ( $groups === null ) $groups = @$wgNamespacePermissionLockdown[$ns]['*'];
+		if ( $groups === null ) {
+			$groups = @$wgNamespacePermissionLockdown['*'][$action];
+		}
+		if ( $groups === null ) {
+			$groups = @$wgNamespacePermissionLockdown[$ns]['*'];
+		}
 	}
 
-	if ( $groups === null ) return true;
-	if ( count( $groups ) == 0 ) return false;
+	if ( $groups === null ) {
+		return true;
+	}
+	if ( count( $groups ) == 0 ) {
+		return false;
+	}
 
 	# print "<br />nsAccessUserCan(".$title->getPrefixedDBkey().", ".$user->getName().", $action)<br />\n";
 	# print_r($groups);
@@ -107,8 +116,7 @@ function lockdownUserCan( $title, $user, $action, &$result ) {
 		# group is allowed - keep processing
 		$result = null;
 		return true;
-	}
-	else {
+	} else {
 		# print "<br />DENY<br />\n";
 		# group is denied - abort
 		$result = false;
@@ -121,24 +129,33 @@ function lockdownMediawikiPerformAction ( $output, $article, $title, $user, $req
 
 	$action = $wiki->getAction( $request );
 
-	if ( !isset( $wgActionLockdown[$action] ) ) return true;
+	if ( !isset( $wgActionLockdown[$action] ) ) {
+		return true;
+	}
 
 	$groups = $wgActionLockdown[$action];
-	if ( $groups === null ) return true;
-	if ( count( $groups ) == 0 ) return false;
+	if ( $groups === null ) {
+		return true;
+	}
+	if ( count( $groups ) == 0 ) {
+		return false;
+	}
 
 	$ugroups = $user->getEffectiveGroups();
 	$match = array_intersect( $ugroups, $groups );
 
-	if ( $match ) return true;
-	else return false;
+	if ( $match ) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function lockdownSearchableNamespaces($arr) {
 	global $wgUser, $wgNamespacePermissionLockdown;
 	
-	//don't continue if $wgUser's name and id are both false (bug 28842)
-	if ( $wgUser->getId() === NULL && $wgUser->getName() === NULL ) {
+	//don't continue if $wgUser's name and id are both null (bug 28842)
+	if ( $wgUser->getId() === null && $wgUser->getName() === null ) {
 		return true;
 	}
 	
@@ -146,12 +163,18 @@ function lockdownSearchableNamespaces($arr) {
 
 	foreach ( $arr as $ns => $name ) {
 		$groups = @$wgNamespacePermissionLockdown[$ns]['read'];
-		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown['*']['read'];
-		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown[$ns]['*'];
+		if ( $groups === null ) {
+			$groups = @$wgNamespacePermissionLockdown['*']['read'];
+		}
+		if ( $groups === null ) {
+			$groups = @$wgNamespacePermissionLockdown[$ns]['*'];
+		}
 	
-		if ( $groups === NULL ) continue;
+		if ( $groups === null ) {
+			continue;
+		}
 		
-		if ( ( count( $groups ) == 0 ) || !array_intersect($ugroups, $groups) ) {
+		if ( ( count( $groups ) == 0 ) || !array_intersect( $ugroups, $groups ) ) {
 			unset( $arr[$ns] );
 		}
 	}
@@ -164,10 +187,16 @@ function lockdownTitle(&$title) {
 		$ugroups = $wgUser->getEffectiveGroups();
 	
 		$groups = @$wgNamespacePermissionLockdown[$title->getNamespace()]['read'];
-		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown['*']['read'];
-		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown[$title->getNamespace()]['*'];
+		if ( $groups === null ) {
+			$groups = @$wgNamespacePermissionLockdown['*']['read'];
+		}
+		if ( $groups === null ) {
+			$groups = @$wgNamespacePermissionLockdown[$title->getNamespace()]['*'];
+		}
 	
-		if ( $groups === NULL ) return false;
+		if ( $groups === null ) {
+			return false;
+		}
 		
 		if ( ( count( $groups ) == 0 ) || !array_intersect($ugroups, $groups) ) {
 			$title = null;
@@ -178,12 +207,12 @@ function lockdownTitle(&$title) {
 }
 
 #Stop a Go search for a hidden title to send you to the login required page. Will show a no such page message instead.
-function lockdownSearchGetNearMatchComplete($searchterm, $title) {
+function lockdownSearchGetNearMatchComplete( $searchterm, $title ) {
 	return lockdownTitle( $title );
 }
 
 #Protect against namespace prefixes, explicit ones and <searchall> ('all:'-queries).
-function lockdownSearchEngineReplacePrefixesComplete($searchEngine, $query, $parsed) {
+function lockdownSearchEngineReplacePrefixesComplete( $searchEngine, $query, $parsed ) {
 	global $wgUser, $wgNamespacePermissionLockdown;
 	if ( $searchEngine->namespaces === null ) { #null means all namespaces.
 		$searchEngine->namespaces = array_keys( SearchEngine::searchableNamespaces() ); #Use the namespaces... filtered
@@ -194,17 +223,23 @@ function lockdownSearchEngineReplacePrefixesComplete($searchEngine, $query, $par
 
 	foreach ( $searchEngine->namespaces as $key => $ns ) {
 		$groups = @$wgNamespacePermissionLockdown[$ns]['read'];
-		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown['*']['read'];
-		if ( $groups === NULL ) $groups = @$wgNamespacePermissionLockdown[$ns]['*'];
+		if ( $groups === null ) {
+			$groups = @$wgNamespacePermissionLockdown['*']['read'];
+		}
+		if ( $groups === null ) {
+			$groups = @$wgNamespacePermissionLockdown[$ns]['*'];
+		}
 	
-		if ( $groups === NULL ) continue;
+		if ( $groups === null ) {
+			continue;
+		}
 		
-		if ( ( count( $groups ) == 0 ) || !array_intersect($ugroups, $groups) ) {
+		if ( ( count( $groups ) == 0 ) || !array_intersect( $ugroups, $groups ) ) {
 			unset( $searchEngine->namespaces[$key] );
 		}
 	}
 	
-	if (count($searchEngine->namespaces) == 0) {
+	if ( count( $searchEngine->namespaces ) == 0 ) {
 		$searchEngine->namespaces = array_keys( SearchEngine::searchableNamespaces() );
 	}
 	return true;
