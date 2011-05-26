@@ -116,6 +116,13 @@ $messages['fr'] = array(
 	'lockdown-desc' => "Permissions d'accès par espace de noms",
 );
 
+/** Franco-Provençal (Arpetan)
+ * @author ChrisPtDe
+ */
+$messages['frp'] = array(
+	'lockdown-desc' => 'Pèrmissions d’accès per èspâço de noms.',
+);
+
 /** Galician (Galego)
  * @author Toliño
  */
