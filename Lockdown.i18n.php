@@ -207,6 +207,13 @@ $messages['mk'] = array(
 	'lockdown-desc' => 'Групни дозволи по именски простор',
 );
 
+/** Malay (Bahasa Melayu)
+ * @author Anakmalaysia
+ */
+$messages['ms'] = array(
+	'lockdown-desc' => 'Keizinan kumpulan seruang nama',
+);
+
 /** Dutch (Nederlands)
  * @author Siebrand
  */
