@@ -335,9 +335,11 @@ $messages['uk'] = array(
 	'lockdown-desc' => 'Групові права за просторами назв',
 );
 
-/** Simplified Chinese (‪中文(简体)‬) */
+/** Simplified Chinese (‪中文(简体)‬)
+ * @author PhiLiP
+ */
 $messages['zh-hans'] = array(
-	'lockdown-desc' => '每个命名空间组的权限',
+	'lockdown-desc' => '按名字空间的用户组权限',
 );
 
 /** Traditional Chinese (‪中文(繁體)‬)
