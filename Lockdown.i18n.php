@@ -36,6 +36,13 @@ $messages['ar'] = array(
 	'lockdown-desc' => 'سماحات لكل مجموعة نطاق',
 );
 
+/** Asturian (Asturianu)
+ * @author Xuacu
+ */
+$messages['ast'] = array(
+	'lockdown-desc' => 'Permisos de grupu por espaciu de nomes',
+);
+
 /** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
