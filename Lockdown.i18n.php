@@ -84,7 +84,7 @@ $messages['cs'] = array(
  * @author Kghbln
  */
 $messages['de'] = array(
-	'lockdown-desc' => 'Ermöglicht die namensraumspezifische Vergaben von Benutzergruppenberechtigungen',
+	'lockdown-desc' => 'Ermöglicht die benutzergruppenspezifische Vergaben von Berechtigungen für Namensräume, Spezialseiten und Aktionen',
 );
 
 /** Lower Sorbian (Dolnoserbski)
