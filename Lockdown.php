@@ -99,7 +99,7 @@ function lockdownUserPermissionsErrors( $title, $user, $action, &$result ) {
 		return true;
 	}
 	
-	if ( count( $groups ) == 0 ) {
+	if ( !$groups ) {
 		#no groups allowed
 
 		$result = array(
@@ -144,7 +144,7 @@ function lockdownMediawikiPerformAction ( $output, $article, $title, $user, $req
 	if ( $groups === null ) {
 		return true;
 	}
-	if ( count( $groups ) == 0 ) {
+	if ( !$groups ) {
 		return false;
 	}
 
@@ -181,7 +181,7 @@ function lockdownSearchableNamespaces($arr) {
 			continue;
 		}
 
-		if ( ( count( $groups ) == 0 ) || !array_intersect( $ugroups, $groups ) ) {
+		if ( !$groups || !array_intersect( $ugroups, $groups ) ) {
 			unset( $arr[$ns] );
 		}
 	}
@@ -205,7 +205,7 @@ function lockdownTitle(&$title) {
 			return false;
 		}
 
-		if ( ( count( $groups ) == 0 ) || !array_intersect($ugroups, $groups) ) {
+		if ( !$groups || !array_intersect($ugroups, $groups) ) {
 			$title = null;
 			return false;
 		}
@@ -241,7 +241,7 @@ function lockdownSearchEngineReplacePrefixesComplete( $searchEngine, $query, $pa
 			continue;
 		}
 
-		if ( ( count( $groups ) == 0 ) || !array_intersect( $ugroups, $groups ) ) {
+		if ( !$groups || !array_intersect( $ugroups, $groups ) ) {
 			unset( $searchEngine->namespaces[$key] );
 		}
 	}
