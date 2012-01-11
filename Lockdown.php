@@ -55,7 +55,6 @@ $wgHooks['SearchEngineReplacePrefixesComplete'][] = 'lockdownSearchEngineReplace
 
 function lockdownUserPermissionsErrors( $title, $user, $action, &$result ) {
 	global $wgNamespacePermissionLockdown, $wgSpecialPageLockdown, $wgWhitelistRead, $wgLang;
-	# print "<br />nsAccessUserCan(".$title->getPrefixedDBkey().", ".$user->getName().", $action)<br />\n";
 
 	$result = null;
 	
@@ -110,22 +109,15 @@ function lockdownUserPermissionsErrors( $title, $user, $action, &$result ) {
 		return false;
 	}
 
-	# print "<br />nsAccessUserCan(".$title->getPrefixedDBkey().", ".$user->getName().", $action)<br />\n";
-	# print_r($groups);
-
 	$ugroups = $user->getEffectiveGroups( true );;
-	# print_r($ugroups);
 
 	$match = array_intersect( $ugroups, $groups );
-	# print_r($match);
 
 	if ( $match ) {
-		# print "<br />PASS<br />\n";
 		# group is allowed - keep processing
 		$result = null;
 		return true;
 	} else {
-		# print "<br />DENY<br />\n";
 		# group is denied - abort
 		$groupLinks = array_map( array( 'User', 'makeGroupLinkWiki' ), $groups );
 		
