@@ -47,18 +47,18 @@ $wgNamespacePermissionLockdown = array();
 $wgSpecialPageLockdown = array();
 $wgActionLockdown = array();
 
-$wgHooks['userCan'][] = 'lockdownUserCan';
+$wgHooks['getUserPermissionsErrors'][] = 'lockdownUserPermissionsErrors';
 $wgHooks['MediaWikiPerformAction'][] = 'lockdownMediawikiPerformAction';
 $wgHooks['SearchableNamespaces'][] = 'lockdownSearchableNamespaces';
 $wgHooks['SearchGetNearMatchComplete'][] = 'lockdownSearchGetNearMatchComplete';
 $wgHooks['SearchEngineReplacePrefixesComplete'][] = 'lockdownSearchEngineReplacePrefixesComplete';
 
-function lockdownUserCan( $title, $user, $action, &$result ) {
-	global $wgNamespacePermissionLockdown, $wgSpecialPageLockdown, $wgWhitelistRead;
+function lockdownUserPermissionsErrors( $title, $user, $action, &$result ) {
+	global $wgNamespacePermissionLockdown, $wgSpecialPageLockdown, $wgWhitelistRead, $wgLang;
 	# print "<br />nsAccessUserCan(".$title->getPrefixedDBkey().", ".$user->getName().", $action)<br />\n";
 
 	$result = null;
-
+	
 	// don't impose extra restrictions on UI pages
 	if ( $title->isCssJsSubpage() ) {
 		return true;
@@ -75,7 +75,7 @@ function lockdownUserCan( $title, $user, $action, &$result ) {
 	$ns = $title->getNamespace();
 	if ( NS_SPECIAL == $ns ) {
 		if ( $action != 'read' ) {
-			$result = false;
+			$result = false; #WTF? ignored, i guess...
 			return true;
 		} else {
 			foreach ( $wgSpecialPageLockdown as $page => $g ) {
@@ -96,9 +96,17 @@ function lockdownUserCan( $title, $user, $action, &$result ) {
 	}
 
 	if ( $groups === null ) {
+		#no restrictions
 		return true;
 	}
+	
 	if ( count( $groups ) == 0 ) {
+		#no groups allowed
+
+		$result = array(
+			'badaccess-group0'
+		);
+		
 		return false;
 	}
 
@@ -119,7 +127,14 @@ function lockdownUserCan( $title, $user, $action, &$result ) {
 	} else {
 		# print "<br />DENY<br />\n";
 		# group is denied - abort
-		$result = false;
+		$groupLinks = array_map( array( 'User', 'makeGroupLinkWiki' ), $groups );
+		
+		$result = array(
+			'badaccess-groups',
+			$wgLang->commaList( $groupLinks ),
+			count( $groups )
+		);
+				
 		return false;
 	}
 }
