@@ -17,10 +17,7 @@
 * such as the search page, categories, etc.
 *
 * Known ways to access "hidden" pages:
-* - transcluding as template (can't really be fixed without disabling inclusion for specific namespaces;
-*                            that could be done by adding a hook to Parser::fetchTemplate)
-* - Special:export  (easily fixed using $wgSpecialPageLockdown)
-* - the search page may find text and show excerpts from hidden pages (should be fixed from MediaWiki 1.16).
+* - transcluding as template. can be avoided using $wgNonincludableNamespaces.
 * Some search messages may reveal the page existance by producing links to it (MediaWiki:searchsubtitle,
 * MediaWiki:noexactmatch, MediaWiki:searchmenu-exists, MediaWiki:searchmenu-new...).
 * - supplying oldid=<revisionfromhiddenpage> may work in some versions of mediawiki. Same with diff, etc.
@@ -132,7 +129,7 @@ function lockdownUserPermissionsErrors( $title, $user, $action, &$result ) {
 }
 
 function lockdownMediawikiPerformAction ( $output, $article, $title, $user, $request, $wiki ) {
-	global $wgActionLockdown;
+	global $wgActionLockdown, $wgLang;
 
 	$action = $wiki->getAction( $request );
 
@@ -154,6 +151,11 @@ function lockdownMediawikiPerformAction ( $output, $article, $title, $user, $req
 	if ( $match ) {
 		return true;
 	} else {
+		$groupLinks = array_map( array( 'User', 'makeGroupLinkWiki' ), $groups );
+		
+		$err = array( 'badaccess-groups', $wgLang->commaList( $groupLinks ), count( $groups ) );
+		throw new PermissionsError( 'delete', array( $err ) );
+		
 		return false;
 	}
 }
