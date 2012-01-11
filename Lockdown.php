@@ -70,15 +70,10 @@ function lockdownUserPermissionsErrors( $title, $user, $action, &$result ) {
 	$groups = null;
 	$ns = $title->getNamespace();
 	if ( NS_SPECIAL == $ns ) {
-		if ( $action != 'read' ) {
-			$result = false; #WTF? ignored, i guess...
-			return true;
-		} else {
-			foreach ( $wgSpecialPageLockdown as $page => $g ) {
-				if ( !$title->isSpecial( $page ) ) continue;
-				$groups = $g;
-				break;
-			}
+		foreach ( $wgSpecialPageLockdown as $page => $g ) {
+			if ( !$title->isSpecial( $page ) ) continue;
+			$groups = $g;
+			break;
 		}
 	}
 	else {
