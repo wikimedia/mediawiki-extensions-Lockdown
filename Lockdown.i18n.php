@@ -221,18 +221,18 @@ $messages['ms'] = array(
 	'lockdown-desc' => 'Keizinan kumpulan seruang nama',
 );
 
-/** Dutch (Nederlands)
- * @author Siebrand
- */
-$messages['nl'] = array(
-	'lockdown-desc' => 'Groepsrechten per naamruimte',
-);
-
 /** Norwegian (bokmål)‬ (‪Norsk (bokmål)‬)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
 	'lockdown-desc' => 'Per navneromsgruppetillatelser',
+);
+
+/** Dutch (Nederlands)
+ * @author Siebrand
+ */
+$messages['nl'] = array(
+	'lockdown-desc' => 'Groepsrechten per naamruimte',
 );
 
 /** Occitan (Occitan)
