@@ -193,6 +193,13 @@ $messages['ja'] = array(
 	'lockdown-desc' => '名前空間ごとのグループ許可',
 );
 
+/** Korean (한국어)
+ * @author 아라
+ */
+$messages['ko'] = array(
+	'lockdown-desc' => '이름공간 그룹 권한마다',
+);
+
 /** Colognian (Ripoarisch)
  * @author Purodha
  */
