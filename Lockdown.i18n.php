@@ -43,7 +43,7 @@ $messages['ast'] = array(
 	'lockdown-desc' => 'Permisos de grupu por espaciu de nomes',
 );
 
-/** Belarusian (Taraškievica orthography) (‪Беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -87,7 +87,7 @@ $messages['de'] = array(
 	'lockdown-desc' => 'Ermöglicht die benutzergruppenspezifische Vergabe von Berechtigungen für Namensräume, Spezialseiten und Aktionen',
 );
 
-/** Lower Sorbian (Dolnoserbski)
+/** Lower Sorbian (dolnoserbski)
  * @author Michawiki
  */
 $messages['dsb'] = array(
@@ -130,7 +130,7 @@ $messages['frp'] = array(
 	'lockdown-desc' => 'Pèrmissions d’accès per èspâço de noms.',
 );
 
-/** Galician (Galego)
+/** Galician (galego)
  * @author Toliño
  */
 $messages['gl'] = array(
@@ -151,7 +151,7 @@ $messages['he'] = array(
 	'lockdown-desc' => 'הרשאות קבוצה לפי מרחב שם',
 );
 
-/** Upper Sorbian (Hornjoserbsce)
+/** Upper Sorbian (hornjoserbsce)
  * @author Michawiki
  */
 $messages['hsb'] = array(
