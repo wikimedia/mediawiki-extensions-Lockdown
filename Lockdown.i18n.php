@@ -43,7 +43,7 @@ $messages['ast'] = array(
 	'lockdown-desc' => 'Permisos de grupu por espaciu de nomes',
 );
 
-/** Belarusian (Taraškievica orthography) (‪беларуская (тарашкевіца)‬)
+/** Belarusian (Taraškievica orthography) (беларуская (тарашкевіца)‎)
  * @author EugeneZelenko
  * @author Jim-by
  */
@@ -228,7 +228,7 @@ $messages['ms'] = array(
 	'lockdown-desc' => 'Keizinan kumpulan seruang nama',
 );
 
-/** Norwegian Bokmål (‪norsk (bokmål)‬)
+/** Norwegian Bokmål (norsk (bokmål)‎)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
@@ -300,14 +300,14 @@ $messages['sk'] = array(
 	'lockdown-desc' => 'Skupinové oprávnenia špecifické podľa menného priestoru',
 );
 
-/** Serbian (Cyrillic script) (‪српски (ћирилица)‬)
+/** Serbian (Cyrillic script) (српски (ћирилица)‎)
  * @author Михајло Анђелковић
  */
 $messages['sr-ec'] = array(
 	'lockdown-desc' => 'Групне дозволе по именским просторима',
 );
 
-/** Serbian (Latin script) (‪srpski (latinica)‬)
+/** Serbian (Latin script) (srpski (latinica)‎)
  * @author Liangent
  */
 $messages['sr-el'] = array(
@@ -349,14 +349,14 @@ $messages['uk'] = array(
 	'lockdown-desc' => 'Групові права за просторами назв',
 );
 
-/** Simplified Chinese (‪中文（简体）‬)
+/** Simplified Chinese (中文（简体）‎)
  * @author PhiLiP
  */
 $messages['zh-hans'] = array(
 	'lockdown-desc' => '按名字空间的用户组权限',
 );
 
-/** Traditional Chinese (‪中文（繁體）‬)
+/** Traditional Chinese (中文（繁體）‎)
  * @author Frankou
  * @author Mark85296341
  */
