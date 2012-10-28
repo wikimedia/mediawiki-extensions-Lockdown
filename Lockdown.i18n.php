@@ -363,4 +363,3 @@ $messages['zh-hans'] = array(
 $messages['zh-hant'] = array(
 	'lockdown-desc' => '每個命名空間群組的權限',
 );
-
