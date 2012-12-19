@@ -17,9 +17,10 @@ $messages['en'] = array(
 
 /** Message documentation (Message documentation)
  * @author Fryed-peach
+ * @author Shirayuki
  */
 $messages['qqq'] = array(
-	'lockdown-desc' => '{{desc}}',
+	'lockdown-desc' => '{{desc|name=Lockdown|url=http://www.mediawiki.org/wiki/Extension:Lockdown}}',
 );
 
 /** Afrikaans (Afrikaans)
