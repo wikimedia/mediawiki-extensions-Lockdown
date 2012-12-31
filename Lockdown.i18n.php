@@ -294,6 +294,13 @@ $messages['ru'] = array(
 	'lockdown-desc' => 'Групповые права по пространствам имён',
 );
 
+/** Sinhala (සිංහල)
+ * @author පසිඳු කාවින්ද
+ */
+$messages['si'] = array(
+	'lockdown-desc' => 'එක් එක් නාමඅවකාශයකට සමූහ අවසර',
+);
+
 /** Slovak (slovenčina)
  * @author Helix84
  */
