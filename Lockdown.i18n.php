@@ -229,7 +229,7 @@ $messages['ms'] = array(
 	'lockdown-desc' => 'Keizinan kumpulan seruang nama',
 );
 
-/** Norwegian Bokmål (norsk (bokmål)‎)
+/** Norwegian Bokmål (norsk bokmål)
  * @author Nghtwlkr
  */
 $messages['nb'] = array(
