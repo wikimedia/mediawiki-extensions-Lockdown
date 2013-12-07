@@ -73,7 +73,7 @@ $messages['ca'] = array(
 	'lockdown-desc' => 'Permisos de grup per espai de noms',
 );
 
-/** Czech (česky)
+/** Czech (čeština)
  * @author Mormegil
  */
 $messages['cs'] = array(
