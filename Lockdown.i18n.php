@@ -110,6 +110,13 @@ $messages['es'] = array(
 	'lockdown-desc' => 'Permisos de grupo por espacio de nombres',
 );
 
+/** Persian (فارسی)
+ * @author Armin1392
+ */
+$messages['fa'] = array(
+	'lockdown-desc' => 'مجوزهای هر گروه فضای نام',
+);
+
 /** Finnish (suomi)
  * @author Centerlink
  */
