@@ -39,6 +39,7 @@ $wgExtensionCredits['other'][] = array(
 	'descriptionmsg' => 'lockdown-desc',
 );
 
+$wgMessagesDirs['Lockdown'] = __DIR__ . '/i18n';
 $wgExtensionMessagesFiles['Lockdown'] = dirname(__FILE__) . '/Lockdown.i18n.php';
 $wgNamespacePermissionLockdown = array();
 $wgSpecialPageLockdown = array();
@@ -54,7 +55,7 @@ function lockdownUserPermissionsErrors( $title, $user, $action, &$result ) {
 	global $wgNamespacePermissionLockdown, $wgSpecialPageLockdown, $wgWhitelistRead, $wgLang;
 
 	$result = null;
-	
+
 	// don't impose extra restrictions on UI pages
 	if ( $title->isCssJsSubpage() ) {
 		return true;
@@ -90,14 +91,14 @@ function lockdownUserPermissionsErrors( $title, $user, $action, &$result ) {
 		#no restrictions
 		return true;
 	}
-	
+
 	if ( !$groups ) {
 		#no groups allowed
 
 		$result = array(
 			'badaccess-group0'
 		);
-		
+
 		return false;
 	}
 
@@ -112,13 +113,13 @@ function lockdownUserPermissionsErrors( $title, $user, $action, &$result ) {
 	} else {
 		# group is denied - abort
 		$groupLinks = array_map( array( 'User', 'makeGroupLinkWiki' ), $groups );
-		
+
 		$result = array(
 			'badaccess-groups',
 			$wgLang->commaList( $groupLinks ),
 			count( $groups )
 		);
-				
+
 		return false;
 	}
 }
@@ -147,10 +148,10 @@ function lockdownMediawikiPerformAction ( $output, $article, $title, $user, $req
 		return true;
 	} else {
 		$groupLinks = array_map( array( 'User', 'makeGroupLinkWiki' ), $groups );
-		
+
 		$err = array( 'badaccess-groups', $wgLang->commaList( $groupLinks ), count( $groups ) );
 		throw new PermissionsError( 'delete', array( $err ) );
-		
+
 		return false;
 	}
 }

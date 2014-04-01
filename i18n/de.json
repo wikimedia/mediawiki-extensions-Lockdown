@@ -1,0 +1,9 @@
+{
+    "@metadata": {
+        "authors": [
+            "Imre",
+            "Kghbln"
+        ]
+    },
+    "lockdown-desc": "Ermöglicht die benutzergruppenspezifische Vergabe von Berechtigungen für Namensräume, Spezialseiten und Aktionen"
+}
