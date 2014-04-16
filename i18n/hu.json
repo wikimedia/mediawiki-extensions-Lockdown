@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Glanthor Reviol"
-        ]
-    },
-    "lockdown-desc": "Névterenkénti csoportjogosultságok"
+	"@metadata": {
+		"authors": [
+			"Glanthor Reviol"
+		]
+	},
+	"lockdown-desc": "Névterenkénti csoportjogosultságok"
 }

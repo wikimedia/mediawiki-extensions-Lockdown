@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Giro720"
-        ]
-    },
-    "lockdown-desc": "Permissões de grupo por domínio"
+	"@metadata": {
+		"authors": [
+			"Giro720"
+		]
+	},
+	"lockdown-desc": "Permissões de grupo por domínio"
 }

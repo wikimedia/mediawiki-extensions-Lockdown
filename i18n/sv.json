@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Per"
-        ]
-    },
-    "lockdown-desc": "Grupprättigheter per namnrymd"
+	"@metadata": {
+		"authors": [
+			"Per"
+		]
+	},
+	"lockdown-desc": "Grupprättigheter per namnrymd"
 }

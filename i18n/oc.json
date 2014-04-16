@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Cedric31"
-        ]
-    },
-    "lockdown-desc": "Permissions d'accès per espaci de noms"
+	"@metadata": {
+		"authors": [
+			"Cedric31"
+		]
+	},
+	"lockdown-desc": "Permissions d'accès per espaci de noms"
 }

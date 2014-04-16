@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Robby"
-        ]
-    },
-    "lockdown-desc": "Gruppen-Autorisatioune pro Nummraum"
+	"@metadata": {
+		"authors": [
+			"Robby"
+		]
+	},
+	"lockdown-desc": "Gruppen-Autorisatioune pro Nummraum"
 }

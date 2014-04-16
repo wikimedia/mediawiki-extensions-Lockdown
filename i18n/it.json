@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Civvì"
-        ]
-    },
-    "lockdown-desc": "Autorizzazioni di gruppo per namespace"
+	"@metadata": {
+		"authors": [
+			"Civvì"
+		]
+	},
+	"lockdown-desc": "Autorizzazioni di gruppo per namespace"
 }

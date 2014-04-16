@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "IAlex"
-        ]
-    },
-    "lockdown-desc": "Permissions d'accès par espace de noms"
+	"@metadata": {
+		"authors": [
+			"IAlex"
+		]
+	},
+	"lockdown-desc": "Permissions d'accès par espace de noms"
 }

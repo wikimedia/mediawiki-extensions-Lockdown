@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "ChrisPtDe"
-        ]
-    },
-    "lockdown-desc": "Pèrmissions d’accès per èspâço de noms."
+	"@metadata": {
+		"authors": [
+			"ChrisPtDe"
+		]
+	},
+	"lockdown-desc": "Pèrmissions d’accès per èspâço de noms."
 }

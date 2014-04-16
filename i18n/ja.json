@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Fryed-peach"
-        ]
-    },
-    "lockdown-desc": "名前空間ごとのグループ許可"
+	"@metadata": {
+		"authors": [
+			"Fryed-peach"
+		]
+	},
+	"lockdown-desc": "名前空間ごとのグループ許可"
 }

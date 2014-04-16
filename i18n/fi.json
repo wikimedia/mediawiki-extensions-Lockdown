@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Centerlink"
-        ]
-    },
-    "lockdown-desc": "Ryhmäoikeudet nimiavaruuksittain"
+	"@metadata": {
+		"authors": [
+			"Centerlink"
+		]
+	},
+	"lockdown-desc": "Ryhmäoikeudet nimiavaruuksittain"
 }

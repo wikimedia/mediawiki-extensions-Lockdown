@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Liangent"
-        ]
-    },
-    "lockdown-desc": "Grupne dozvole po imenskim prostorima"
+	"@metadata": {
+		"authors": [
+			"Liangent"
+		]
+	},
+	"lockdown-desc": "Grupne dozvole po imenskim prostorima"
 }

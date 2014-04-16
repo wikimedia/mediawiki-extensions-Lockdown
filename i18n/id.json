@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Bennylin"
-        ]
-    },
-    "lockdown-desc": "Per hak akses grup ruang nama"
+	"@metadata": {
+		"authors": [
+			"Bennylin"
+		]
+	},
+	"lockdown-desc": "Per hak akses grup ruang nama"
 }
