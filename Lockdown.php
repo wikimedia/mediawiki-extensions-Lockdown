@@ -150,7 +150,7 @@ function lockdownMediawikiPerformAction ( $output, $article, $title, $user, $req
 		$groupLinks = array_map( array( 'User', 'makeGroupLinkWiki' ), $groups );
 
 		$err = array( 'badaccess-groups', $wgLang->commaList( $groupLinks ), count( $groups ) );
-		throw new PermissionsError( 'delete', array( $err ) );
+		throw new PermissionsError( $request->getVal('action'), array( $err ) );
 
 		return false;
 	}
