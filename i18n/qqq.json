@@ -2,8 +2,9 @@
 	"@metadata": {
 		"authors": [
 			"Fryed-peach",
-			"Shirayuki"
+			"Shirayuki",
+			"Umherirrender"
 		]
 	},
-	"lockdown-desc": "{{desc|name=Lockdown|url=http://www.mediawiki.org/wiki/Extension:Lockdown}}"
+	"lockdown-desc": "{{desc|name=Lockdown|url=https://www.mediawiki.org/wiki/Extension:Lockdown}}"
 }
