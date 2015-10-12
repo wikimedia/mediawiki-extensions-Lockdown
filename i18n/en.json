@@ -1,8 +1,8 @@
 {
-    "@metadata": {
-        "authors": [
-            "Daniel Kinzler"
-        ]
-    },
-    "lockdown-desc": "Per namespace group permissions"
+	"@metadata": {
+		"authors": [
+			"Daniel Kinzler"
+		]
+	},
+	"lockdown-desc": "Per namespace group permissions"
 }
