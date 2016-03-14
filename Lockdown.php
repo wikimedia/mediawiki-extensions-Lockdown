@@ -34,13 +34,17 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 $wgExtensionCredits['other'][] = array(
 	'path' => __FILE__,
 	'name' => 'Lockdown',
-	'author' => array( 'Daniel Kinzler', 'Platonides'),
-	'url' => 'http://mediawiki.org/wiki/Extension:Lockdown',
+	'author' => array(
+		'Daniel Kinzler',
+		'Platonides'
+	),
+	'url' => 'https://mediawiki.org/wiki/Extension:Lockdown',
 	'descriptionmsg' => 'lockdown-desc',
+	'license-name' => 'GPL-2.0+'
 );
 
 $wgMessagesDirs['Lockdown'] = __DIR__ . '/i18n';
-$wgExtensionMessagesFiles['Lockdown'] = dirname(__FILE__) . '/Lockdown.i18n.php';
+$wgExtensionMessagesFiles['Lockdown'] = __DIR__ . '/Lockdown.i18n.php';
 $wgNamespacePermissionLockdown = array();
 $wgSpecialPageLockdown = array();
 $wgActionLockdown = array();
