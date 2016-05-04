@@ -161,14 +161,20 @@ function lockdownMediawikiPerformAction ( $output, $article, $title, $user, $req
 }
 
 function lockdownSearchableNamespaces($arr) {
-	global $wgUser, $wgNamespacePermissionLockdown;
+	global $wgNamespacePermissionLockdown;
 
-	//don't continue if $wgUser's name and id are both null (bug 28842)
-	if ( $wgUser->getId() === null && $wgUser->getName() === null ) {
+	$user = RequestContext::getMain()->getUser();
+
+	if ( !$user ) {
 		return true;
 	}
 
-	$ugroups = $wgUser->getEffectiveGroups( true );;
+	//don't continue if $user's name and id are both null (bug 28842)
+	if ( $user->getId() === null && $user->getName() === null ) {
+		return true;
+	}
+
+	$ugroups = $user->getEffectiveGroups( true );;
 
 	foreach ( $arr as $ns => $name ) {
 		$groups = @$wgNamespacePermissionLockdown[$ns]['read'];
