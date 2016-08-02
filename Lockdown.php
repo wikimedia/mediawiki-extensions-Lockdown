@@ -58,6 +58,8 @@ $wgHooks['SearchEngineReplacePrefixesComplete'][] = 'lockdownSearchEngineReplace
 function lockdownUserPermissionsErrors( $title, $user, $action, &$result ) {
 	global $wgNamespacePermissionLockdown, $wgSpecialPageLockdown, $wgWhitelistRead, $wgLang;
 
+	$ugroups = $user->getEffectiveGroups( true );
+
 	$result = null;
 
 	// don't impose extra restrictions on UI pages
@@ -105,8 +107,6 @@ function lockdownUserPermissionsErrors( $title, $user, $action, &$result ) {
 
 		return false;
 	}
-
-	$ugroups = $user->getEffectiveGroups( true );;
 
 	$match = array_intersect( $ugroups, $groups );
 
