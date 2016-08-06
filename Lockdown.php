@@ -160,7 +160,7 @@ function lockdownMediawikiPerformAction ( $output, $article, $title, $user, $req
 	}
 }
 
-function lockdownSearchableNamespaces($arr) {
+function lockdownSearchableNamespaces( &$searchableNs ) {
 	global $wgNamespacePermissionLockdown;
 
 	$user = RequestContext::getMain()->getUser();
@@ -176,7 +176,7 @@ function lockdownSearchableNamespaces($arr) {
 
 	$ugroups = $user->getEffectiveGroups( true );;
 
-	foreach ( $arr as $ns => $name ) {
+	foreach ( $searchableNs as $ns => $name ) {
 		$groups = @$wgNamespacePermissionLockdown[$ns]['read'];
 		if ( $groups === null ) {
 			$groups = @$wgNamespacePermissionLockdown['*']['read'];
@@ -190,7 +190,7 @@ function lockdownSearchableNamespaces($arr) {
 		}
 
 		if ( !$groups || !array_intersect( $ugroups, $groups ) ) {
-			unset( $arr[$ns] );
+			unset( $searchableNs[$ns] );
 		}
 	}
 	return true;
