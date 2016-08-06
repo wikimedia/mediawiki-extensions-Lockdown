@@ -106,7 +106,7 @@ function lockdownUserPermissionsErrors( $title, $user, $action, &$result ) {
 		return false;
 	}
 
-	$ugroups = $user->getEffectiveGroups( true );;
+	$ugroups = $user->getEffectiveGroups();
 
 	$match = array_intersect( $ugroups, $groups );
 
@@ -145,7 +145,7 @@ function lockdownMediawikiPerformAction ( $output, $article, $title, $user, $req
 		return false;
 	}
 
-	$ugroups = $user->getEffectiveGroups( true );;
+	$ugroups = $user->getEffectiveGroups();
 	$match = array_intersect( $ugroups, $groups );
 
 	if ( $match ) {
@@ -174,7 +174,7 @@ function lockdownSearchableNamespaces($arr) {
 		return true;
 	}
 
-	$ugroups = $user->getEffectiveGroups( true );;
+	$ugroups = $user->getEffectiveGroups();
 
 	foreach ( $arr as $ns => $name ) {
 		$groups = @$wgNamespacePermissionLockdown[$ns]['read'];
@@ -199,7 +199,7 @@ function lockdownSearchableNamespaces($arr) {
 function lockdownTitle(&$title) {
 	if ( is_object($title) ) {
 		global $wgUser, $wgNamespacePermissionLockdown;
-		$ugroups = $wgUser->getEffectiveGroups( true );;
+		$ugroups = $wgUser->getEffectiveGroups();
 
 		$groups = @$wgNamespacePermissionLockdown[$title->getNamespace()]['read'];
 		if ( $groups === null ) {
@@ -234,7 +234,7 @@ function lockdownSearchEngineReplacePrefixesComplete( $searchEngine, $query, $pa
 		return true;
 	}
 
-	$ugroups = $wgUser->getEffectiveGroups( true );;
+	$ugroups = $wgUser->getEffectiveGroups();
 
 	foreach ( $searchEngine->namespaces as $key => $ns ) {
 		$groups = @$wgNamespacePermissionLockdown[$ns]['read'];
