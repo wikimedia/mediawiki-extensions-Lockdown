@@ -53,9 +53,20 @@ $wgHooks['getUserPermissionsErrors'][] = 'lockdownUserPermissionsErrors';
 $wgHooks['MediaWikiPerformAction'][] = 'lockdownMediawikiPerformAction';
 $wgHooks['SearchableNamespaces'][] = 'lockdownSearchableNamespaces';
 $wgHooks['SearchGetNearMatchComplete'][] = 'lockdownSearchGetNearMatchComplete';
-$wgHooks['SearchEngineReplacePrefixesComplete'][] = 'lockdownSearchEngineReplacePrefixesComplete';
 
-function lockdownUserPermissionsErrors( $title, $user, $action, &$result ) {
+/**
+ * @param Title $title
+ * @param User $user
+ * @param string $action
+ * @param MessageSpecifier|array|string|bool|null $result
+ * @return bool
+ */
+function lockdownUserPermissionsErrors(
+	Title $title,
+	User $user,
+	$action,
+	&$result = null
+) {
 	global $wgNamespacePermissionLockdown, $wgSpecialPageLockdown, $wgWhitelistRead, $wgLang;
 
 	$result = null;
@@ -65,7 +76,7 @@ function lockdownUserPermissionsErrors( $title, $user, $action, &$result ) {
 		return true;
 	}
 
-	if ( $action == 'read' && $wgWhitelistRead ) {
+	if ( $action == 'read' && is_array( $wgWhitelistRead ) ) {
 		// don't impose read restrictions on whitelisted pages
 		if ( in_array( $title->getPrefixedText(), $wgWhitelistRead ) ) {
 			return true;
@@ -128,10 +139,17 @@ function lockdownUserPermissionsErrors( $title, $user, $action, &$result ) {
 	}
 }
 
-function lockdownMediawikiPerformAction ( $output, $article, $title, $user, $request, $wiki ) {
+function lockdownMediawikiPerformAction (
+	OutputPage $output,
+	Article $article,
+	Title $title,
+	User $user,
+	WebRequest $request,
+	MediaWiki $wiki
+) {
 	global $wgActionLockdown, $wgLang;
 
-	$action = $wiki->getAction( $request );
+	$action = $wiki->getAction();
 
 	if ( !isset( $wgActionLockdown[$action] ) ) {
 		return true;
@@ -155,107 +173,50 @@ function lockdownMediawikiPerformAction ( $output, $article, $title, $user, $req
 
 		$err = array( 'badaccess-groups', $wgLang->commaList( $groupLinks ), count( $groups ) );
 		throw new PermissionsError( $request->getVal('action'), array( $err ) );
-
-		return false;
 	}
 }
 
-function lockdownSearchableNamespaces( &$searchableNs ) {
-	global $wgNamespacePermissionLockdown;
-
+function lockdownSearchableNamespaces( array &$searchableNs ) {
 	$user = RequestContext::getMain()->getUser();
-
-	if ( !$user ) {
-		return true;
-	}
-
-	//don't continue if $user's name and id are both null (bug 28842)
-	if ( $user->getId() === null && $user->getName() === null ) {
-		return true;
-	}
-
 	$ugroups = $user->getEffectiveGroups();
 
 	foreach ( $searchableNs as $ns => $name ) {
-		$groups = @$wgNamespacePermissionLockdown[$ns]['read'];
-		if ( $groups === null ) {
-			$groups = @$wgNamespacePermissionLockdown['*']['read'];
-		}
-		if ( $groups === null ) {
-			$groups = @$wgNamespacePermissionLockdown[$ns]['*'];
-		}
-
-		if ( $groups === null ) {
-			continue;
-		}
-
-		if ( !$groups || !array_intersect( $ugroups, $groups ) ) {
+		if ( !lockdownNamespace( $ns, $ugroups ) ) {
 			unset( $searchableNs[$ns] );
 		}
 	}
 	return true;
 }
 
-function lockdownTitle(&$title) {
-	if ( is_object($title) ) {
-		global $wgUser, $wgNamespacePermissionLockdown;
-		$ugroups = $wgUser->getEffectiveGroups();
+function lockdownNamespace( $ns, array $ugroups ) {
+	global $wgNamespacePermissionLockdown;
 
-		$groups = @$wgNamespacePermissionLockdown[$title->getNamespace()]['read'];
-		if ( $groups === null ) {
-			$groups = @$wgNamespacePermissionLockdown['*']['read'];
-		}
-		if ( $groups === null ) {
-			$groups = @$wgNamespacePermissionLockdown[$title->getNamespace()]['*'];
-		}
-
-		if ( $groups === null ) {
-			return false;
-		}
-
-		if ( !$groups || !array_intersect($ugroups, $groups) ) {
-			$title = null;
-			return false;
-		}
+	$groups = @$wgNamespacePermissionLockdown[$ns]['read'];
+	if ( $groups === null ) {
+		$groups = @$wgNamespacePermissionLockdown['*']['read'];
 	}
+	if ( $groups === null ) {
+		$groups = @$wgNamespacePermissionLockdown[$ns]['*'];
+	}
+
+	if ( $groups === null ) {
+		return false;
+	}
+
+	if ( !$groups || !array_intersect($ugroups, $groups) ) {
+		$title = null;
+		return false;
+	}
+
 	return true;
 }
 
 #Stop a Go search for a hidden title to send you to the login required page. Will show a no such page message instead.
-function lockdownSearchGetNearMatchComplete( $searchterm, $title ) {
-	return lockdownTitle( $title );
-}
+function lockdownSearchGetNearMatchComplete( $searchterm, Title $title = null ) {
+	global $wgUser;
 
-#Protect against namespace prefixes, explicit ones and <searchall> ('all:'-queries).
-function lockdownSearchEngineReplacePrefixesComplete( $searchEngine, $query, $parsed ) {
-	global $wgUser, $wgNamespacePermissionLockdown;
-	if ( $searchEngine->namespaces === null ) { #null means all namespaces.
-		$searchEngine->namespaces = array_keys( SearchEngine::searchableNamespaces() ); #Use the namespaces... filtered
-		return true;
+	if ( $title ) {
+		$ugroups = $wgUser->getEffectiveGroups();
+		return lockdownNamespace( $title->getNamespace(), $ugroups );
 	}
-
-	$ugroups = $wgUser->getEffectiveGroups();
-
-	foreach ( $searchEngine->namespaces as $key => $ns ) {
-		$groups = @$wgNamespacePermissionLockdown[$ns]['read'];
-		if ( $groups === null ) {
-			$groups = @$wgNamespacePermissionLockdown['*']['read'];
-		}
-		if ( $groups === null ) {
-			$groups = @$wgNamespacePermissionLockdown[$ns]['*'];
-		}
-
-		if ( $groups === null ) {
-			continue;
-		}
-
-		if ( !$groups || !array_intersect( $ugroups, $groups ) ) {
-			unset( $searchEngine->namespaces[$key] );
-		}
-	}
-
-	if ( count( $searchEngine->namespaces ) == 0 ) {
-		$searchEngine->namespaces = array_keys( SearchEngine::searchableNamespaces() );
-	}
-	return true;
 }
