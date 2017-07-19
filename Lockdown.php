@@ -36,7 +36,8 @@ $wgExtensionCredits['other'][] = array(
 	'name' => 'Lockdown',
 	'author' => array(
 		'Daniel Kinzler',
-		'Platonides'
+		'Platonides',
+		'...'
 	),
 	'url' => 'https://mediawiki.org/wiki/Extension:Lockdown',
 	'descriptionmsg' => 'lockdown-desc',
@@ -44,7 +45,7 @@ $wgExtensionCredits['other'][] = array(
 );
 
 $wgMessagesDirs['Lockdown'] = __DIR__ . '/i18n';
-$wgExtensionMessagesFiles['Lockdown'] = __DIR__ . '/Lockdown.i18n.php';
+
 $wgNamespacePermissionLockdown = array();
 $wgSpecialPageLockdown = array();
 $wgActionLockdown = array();
