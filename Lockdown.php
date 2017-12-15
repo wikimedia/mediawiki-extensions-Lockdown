@@ -200,12 +200,7 @@ function lockdownNamespace( $ns, array $ugroups ) {
 		$groups = @$wgNamespacePermissionLockdown[$ns]['*'];
 	}
 
-	if ( $groups === null ) {
-		return false;
-	}
-
-	if ( !$groups || !array_intersect($ugroups, $groups) ) {
-		$title = null;
+	if ( is_array( $groups ) && !array_intersect($ugroups, $groups) ) {
 		return false;
 	}
 
@@ -213,11 +208,13 @@ function lockdownNamespace( $ns, array $ugroups ) {
 }
 
 #Stop a Go search for a hidden title to send you to the login required page. Will show a no such page message instead.
-function lockdownSearchGetNearMatchComplete( $searchterm, Title $title = null ) {
+function lockdownSearchGetNearMatchComplete( $searchterm, Title &$title = null ) {
 	global $wgUser;
 
 	if ( $title ) {
 		$ugroups = $wgUser->getEffectiveGroups();
-		return lockdownNamespace( $title->getNamespace(), $ugroups );
+		if ( !lockdownNamespace( $title->getNamespace(), $ugroups ) ) {
+			$title = null;
+		}
 	}
 }
