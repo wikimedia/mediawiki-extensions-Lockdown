@@ -4,48 +4,45 @@
  * Lockdown extension - implements restrictions on individual
  * namespaces and special pages.
  *
+ * Copyright (C) 2007, 2012, 2016  Daniel Kinzler
+ * Copyright (C) 2017  NicheWork, LLC
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA.
+ *
  * @file
  * @ingroup Extensions
  * @author Daniel Kinzler, brightbyte.de
- * @author Mark A. Hershberger, NicheWork, LLC
- * @copyright © 2007, 2016 Daniel Kinzler
- * @copyright © 2017 NicheWork, LLC
+ * @author Mark A. Hershberger <mah@nichework.com>
  * @license GNU General Public Licence 2.0 or later
  */
+namespace MediaWiki\Extensions\Lockdown;
 
-if ( !defined( 'MEDIAWIKI' ) ) {
-	echo( "This file is an extension to the MediaWiki software and cannot be "
-		  . "used standalone.\n" );
-	die( 1 );
-}
+use Article;
+use MediaWiki;
+use OutputPage;
+use PermissionsError;
+use RequestContext;
+use Title;
+use User;
+use WebRequest;
 
-$wgExtensionCredits['other'][] = [
-	'path' => __FILE__,
-	'name' => 'Lockdown',
-	'author' => [
-		'Daniel Kinzler',
-		'Mark A. Hershberger',
-		'Platonides',
-		'...'
-	],
-	'url' => 'https://mediawiki.org/wiki/Extension:Lockdown',
-	'descriptionmsg' => 'lockdown-desc',
-	'license-name' => 'GPL-2.0+'
-];
-
-$wgMessagesDirs['Lockdown'] = __DIR__ . '/i18n';
-
-$wgNamespacePermissionLockdown = [];
-$wgSpecialPageLockdown = [];
-$wgActionLockdown = [];
-
-$wgHooks['getUserPermissionsErrors'][] = 'Lockdown::onGetUserPermissionsErrors';
-$wgHooks['MediaWikiPerformAction'][] = 'Lockdown::onMediawikiPerformAction';
-$wgHooks['SearchableNamespaces'][] = 'Lockdown::onSearchableNamespaces';
-$wgHooks['SearchGetNearMatchComplete'][]
-	= 'Lockdown::onSearchGetNearMatchComplete';
-
-class Lockdown {
+/**
+ * Holds the hooks for the Lockdown extension.
+ */
+class Hooks {
 
 	/**
 	 * Fetch an appropriate permission error (or none!)
@@ -239,7 +236,7 @@ class Lockdown {
 	 * @return bool false if the user does not have permission
 	 */
 	protected static function namespaceCheck( $ns, array $ugroups ) {
-		$groups = namespaceGroups( $ns );
+		$groups = self::namespaceGroups( $ns );
 		if ( is_array( $groups ) && !array_intersect( $ugroups, $groups ) ) {
 			return false;
 		}

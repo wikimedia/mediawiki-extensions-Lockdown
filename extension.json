@@ -1,0 +1,36 @@
+{
+	"name": "Lockdown",
+	"author": [
+		"Daniel Kinzler",
+		"Platonides",
+		"Mark A. Hershberger",
+		"..."
+	],
+	"url": "https://mediawiki.org/wiki/Extension:Lockdown",
+	"requires": {
+		"MediaWiki": ">= 1.27.0"
+	},
+	"descriptionmsg": "lockdown-desc",
+	"license-name": "GPL-2.0+",
+	"type": "other",
+	"MessagesDirs": {
+		"Lockdown": [
+			"i18n"
+		]
+	},
+	"Hooks": {
+		"getUserPermissionsErrors": "MediaWiki\\Extensions\\Lockdown\\Hooks::onGetUserPermissionsErrors",
+		"MediaWikiPerformAction": "MediaWiki\\Extensions\\Lockdown\\Hooks::onMediawikiPerformAction",
+		"SearchableNamespaces": "MediaWiki\\Extensions\\Lockdown\\Hooks::onSearchableNamespaces",
+		"SearchGetNearMatchComplete": "MediaWiki\\Extensions\\Lockdown\\Hooks::onSearchGetNearMatchComplete"
+	},
+	"AutoloadClasses": {
+		"MediaWiki\\Extensions\\Lockdown\\Hooks": "src/Hooks.php"
+	},
+	"config": {
+		"NamespacePermissionLockdown": [],
+		"SpecialPageLockdown": [],
+		"ActionLockdown": []
+	},
+	"manifest_version": 1
+}
