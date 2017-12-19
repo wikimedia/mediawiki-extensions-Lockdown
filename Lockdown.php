@@ -1,7 +1,8 @@
 <?php
 
 /**
- * Lockdown extension - implements restrictions on individual namespaces and special pages.
+ * Lockdown extension - implements restrictions on individual
+ * namespaces and special pages.
  *
  * @file
  * @ingroup Extensions
@@ -10,45 +11,30 @@
  * @license GNU General Public Licence 2.0 or later
  */
 
-/*
-* WARNING: you can use this extension to deny read access to some namespaces. Keep in mind that this
-* may be circumvented in several ways. This extension doesn't try to
-* plug such holes. Also note that pages that are not readable will still be shown in listings,
-* such as the search page, categories, etc.
-*
-* Known ways to access "hidden" pages:
-* - transcluding as template. can be avoided using $wgNonincludableNamespaces.
-* Some search messages may reveal the page existance by producing links to it (MediaWiki:searchsubtitle,
-* MediaWiki:noexactmatch, MediaWiki:searchmenu-exists, MediaWiki:searchmenu-new...).
-* - supplying oldid=<revisionfromhiddenpage> may work in some versions of mediawiki. Same with diff, etc.
-*
-* NOTE: you cannot GRANT access to things forbidden by $wgGroupPermissions. You can only DENY access
-* granted there.
-*/
-
 if ( !defined( 'MEDIAWIKI' ) ) {
-	echo( "This file is an extension to the MediaWiki software and cannot be used standalone.\n" );
+	echo( "This file is an extension to the MediaWiki software and cannot be "
+		  . "used standalone.\n" );
 	die( 1 );
 }
 
-$wgExtensionCredits['other'][] = array(
+$wgExtensionCredits['other'][] = [
 	'path' => __FILE__,
 	'name' => 'Lockdown',
-	'author' => array(
+	'author' => [
 		'Daniel Kinzler',
 		'Platonides',
 		'...'
-	),
+	],
 	'url' => 'https://mediawiki.org/wiki/Extension:Lockdown',
 	'descriptionmsg' => 'lockdown-desc',
 	'license-name' => 'GPL-2.0+'
-);
+];
 
 $wgMessagesDirs['Lockdown'] = __DIR__ . '/i18n';
 
-$wgNamespacePermissionLockdown = array();
-$wgSpecialPageLockdown = array();
-$wgActionLockdown = array();
+$wgNamespacePermissionLockdown = [];
+$wgSpecialPageLockdown = [];
+$wgActionLockdown = [];
 
 $wgHooks['getUserPermissionsErrors'][] = 'lockdownUserPermissionsErrors';
 $wgHooks['MediaWikiPerformAction'][] = 'lockdownMediawikiPerformAction';
@@ -56,11 +42,14 @@ $wgHooks['SearchableNamespaces'][] = 'lockdownSearchableNamespaces';
 $wgHooks['SearchGetNearMatchComplete'][] = 'lockdownSearchGetNearMatchComplete';
 
 /**
- * @param Title $title
- * @param User $user
- * @param string $action
- * @param MessageSpecifier|array|string|bool|null $result
+ * Return an error if the user is locked out of this namespace.
+ *
+ * @param Title $title that is being requested
+ * @param User $user who is requesting
+ * @param string $action they are performing
+ * @param MessageSpecifier|array|string|bool|null &$result response
  * @return bool
+ * @see https://www.mediawiki.org/wiki/Manual:Hooks/getUserPermissionsErrors
  */
 function lockdownUserPermissionsErrors(
 	Title $title,
@@ -68,7 +57,8 @@ function lockdownUserPermissionsErrors(
 	$action,
 	&$result = null
 ) {
-	global $wgNamespacePermissionLockdown, $wgSpecialPageLockdown, $wgWhitelistRead, $wgLang;
+	global $wgNamespacePermissionLockdown, $wgSpecialPageLockdown,
+		$wgWhitelistRead, $wgLang;
 
 	$result = null;
 
@@ -88,12 +78,13 @@ function lockdownUserPermissionsErrors(
 	$ns = $title->getNamespace();
 	if ( NS_SPECIAL == $ns ) {
 		foreach ( $wgSpecialPageLockdown as $page => $g ) {
-			if ( !$title->isSpecial( $page ) ) continue;
+			if ( !$title->isSpecial( $page ) ) {
+				continue;
+			}
 			$groups = $g;
 			break;
 		}
-	}
-	else {
+	} else {
 		$groups = @$wgNamespacePermissionLockdown[$ns][$action];
 		if ( $groups === null ) {
 			$groups = @$wgNamespacePermissionLockdown['*'][$action];
@@ -104,16 +95,16 @@ function lockdownUserPermissionsErrors(
 	}
 
 	if ( $groups === null ) {
-		#no restrictions
+		// no restrictions
 		return true;
 	}
 
 	if ( !$groups ) {
-		#no groups allowed
+		// no groups allowed
 
-		$result = array(
+		$result = [
 			'badaccess-group0'
-		);
+		];
 
 		return false;
 	}
@@ -128,19 +119,32 @@ function lockdownUserPermissionsErrors(
 		return true;
 	} else {
 		# group is denied - abort
-		$groupLinks = array_map( array( 'User', 'makeGroupLinkWiki' ), $groups );
+		$groupLinks = array_map( [ 'User', 'makeGroupLinkWiki' ], $groups );
 
-		$result = array(
+		$result = [
 			'badaccess-groups',
 			$wgLang->commaList( $groupLinks ),
 			count( $groups )
-		);
+		];
 
 		return false;
 	}
 }
 
-function lockdownMediawikiPerformAction (
+/**
+ * Determine if the user is a member of a group that is allowed to
+ * perform the given action.
+ *
+ * @param OutputPage $output n/a
+ * @param Article $article n/a
+ * @param Title $title n/a
+ * @param User $user whose groups we will check
+ * @param WebRequest $request used to get the raw action
+ * @param MediaWiki $wiki used to get the parsed action
+ * @return bool
+ * @see https://www.mediawiki.org/wiki/Manual:Hooks/MediaWikiPerformAction
+ */
+function lockdownMediawikiPerformAction(
 	OutputPage $output,
 	Article $article,
 	Title $title,
@@ -170,13 +174,23 @@ function lockdownMediawikiPerformAction (
 	if ( $match ) {
 		return true;
 	} else {
-		$groupLinks = array_map( array( 'User', 'makeGroupLinkWiki' ), $groups );
+		$groupLinks = array_map( [ 'User', 'makeGroupLinkWiki' ], $groups );
 
-		$err = array( 'badaccess-groups', $wgLang->commaList( $groupLinks ), count( $groups ) );
-		throw new PermissionsError( $request->getVal('action'), array( $err ) );
+		$err = [
+			'badaccess-groups', $wgLang->commaList( $groupLinks ),
+			count( $groups )
+		];
+		throw new PermissionsError( $request->getVal( 'action' ), [ $err ] );
 	}
 }
 
+/**
+ * Filter out the namespaces that the user is locked out of
+ *
+ * @param array &$searchableNs Is filled with searchable namespaces
+ * @return bool
+ * @see https://www.mediawiki.org/wiki/Manual:Hooks/SearchableNamespaces
+ */
 function lockdownSearchableNamespaces( array &$searchableNs ) {
 	$user = RequestContext::getMain()->getUser();
 	$ugroups = $user->getEffectiveGroups();
@@ -189,6 +203,14 @@ function lockdownSearchableNamespaces( array &$searchableNs ) {
 	return true;
 }
 
+/**
+ * Convenience function for internal use only. Determine if one of the
+ * list of groups is allowed in this namespace.
+ *
+ * @param int $ns Namespace being checked
+ * @param array $ugroups list of user's groups
+ * @return bool
+ */
 function lockdownNamespace( $ns, array $ugroups ) {
 	global $wgNamespacePermissionLockdown;
 
@@ -200,15 +222,25 @@ function lockdownNamespace( $ns, array $ugroups ) {
 		$groups = @$wgNamespacePermissionLockdown[$ns]['*'];
 	}
 
-	if ( is_array( $groups ) && !array_intersect($ugroups, $groups) ) {
+	if ( is_array( $groups ) && !array_intersect( $ugroups, $groups ) ) {
 		return false;
 	}
 
 	return true;
 }
 
-#Stop a Go search for a hidden title to send you to the login required page. Will show a no such page message instead.
-function lockdownSearchGetNearMatchComplete( $searchterm, Title &$title = null ) {
+/**
+ * Stop a Go search for a hidden title to send you to the login
+ * required page. Will show a no such page message instead.
+ *
+ * @param string $searchterm the term being searched
+ * @param Title $title Title the user is being sent to
+ * @see https://www.mediawiki.org/wiki/Manual:Hooks/SearchGetNearMatchComplete
+ */
+function lockdownSearchGetNearMatchComplete(
+	$searchterm,
+	Title $title = null
+) {
 	global $wgUser;
 
 	if ( $title ) {
