@@ -44,6 +44,16 @@ use WebRequest;
  */
 class Hooks {
 
+	// Shim to avoid deprecation notice while still being usable on 1.27
+	private static function getGroupLinks( $groups ) {
+		if ( method_exists( UserGroupMembership::class, 'getGroupName' ) ) {
+			$groupLinks = array_map( [ 'UserGroupMembership', 'getGroupName' ], $groups );
+		} else {
+			$groupLinks = array_map( [ 'User', 'makeGroupLinkWiki' ], $groups );
+		}
+		return $groupLinks;
+	}
+
 	/**
 	 * Fetch an appropriate permission error (or none!)
 	 *
@@ -118,7 +128,7 @@ class Hooks {
 			return true;
 		} else {
 			# group is denied - abort
-			$groupLinks = array_map( [ 'User', 'makeGroupLinkWiki' ], $groups );
+			$groupLinks = self::getGroupLinks( $groups );
 
 			$result = [
 				'badaccess-groups',
@@ -173,7 +183,7 @@ class Hooks {
 		if ( $match ) {
 			return true;
 		} else {
-			$groupLinks = array_map( [ 'User', 'makeGroupLinkWiki' ], $groups );
+			$groupLinks = self::getGroupLinks( $groups );
 
 			$err = [
 				'badaccess-groups', $wgLang->commaList( $groupLinks ),
