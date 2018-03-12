@@ -78,7 +78,7 @@ class Hooks {
 		$result = null;
 
 		// don't impose extra restrictions on UI pages
-		if ( $title->isCssJsSubpage() ) {
+		if ( $title->isUserConfigPage() ) {
 			return true;
 		}
 
