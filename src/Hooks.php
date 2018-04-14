@@ -26,7 +26,7 @@
  * @ingroup Extensions
  * @author Daniel Kinzler, brightbyte.de
  * @author Mark A. Hershberger <mah@nichework.com>
- * @license GNU General Public Licence 2.0 or later
+ * @license GPL-2.0-or-later
  */
 namespace MediaWiki\Extensions\Lockdown;
 
