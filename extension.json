@@ -6,7 +6,7 @@
 		"Mark A. Hershberger",
 		"..."
 	],
-	"url": "https://mediawiki.org/wiki/Extension:Lockdown",
+	"url": "https://www.mediawiki.org/wiki/Extension:Lockdown",
 	"requires": {
 		"MediaWiki": ">= 1.31.0"
 	},
