@@ -259,7 +259,7 @@ class Hooks {
 	 * required page. Will show a no such page message instead.
 	 *
 	 * @param string $searchterm the term being searched
-	 * @param Title $title Title the user is being sent to
+	 * @param Title|null $title Title the user is being sent to
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SearchGetNearMatchComplete
 	 */
 	public static function onSearchGetNearMatchComplete(
