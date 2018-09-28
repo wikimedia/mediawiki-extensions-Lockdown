@@ -28,7 +28,9 @@
 		"MediaWiki\\Extensions\\Lockdown\\Hooks": "src/Hooks.php"
 	},
 	"config": {
-		"NamespacePermissionLockdown": [],
+		"NamespacePermissionLockdown": {
+			"_merge_strategy": "array_plus"
+		},
 		"SpecialPageLockdown": [],
 		"ActionLockdown": []
 	},
