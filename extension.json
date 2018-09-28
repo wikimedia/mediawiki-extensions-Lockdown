@@ -21,14 +21,15 @@
 	"Hooks": {
 		"getUserPermissionsErrors": "MediaWiki\\Extensions\\Lockdown\\Hooks::onGetUserPermissionsErrors",
 		"MediaWikiPerformAction": "MediaWiki\\Extensions\\Lockdown\\Hooks::onMediawikiPerformAction",
-		"SearchableNamespaces": "MediaWiki\\Extensions\\Lockdown\\Hooks::onSearchableNamespaces",
 		"SearchGetNearMatchComplete": "MediaWiki\\Extensions\\Lockdown\\Hooks::onSearchGetNearMatchComplete"
 	},
 	"AutoloadClasses": {
 		"MediaWiki\\Extensions\\Lockdown\\Hooks": "src/Hooks.php"
 	},
 	"config": {
-		"NamespacePermissionLockdown": [],
+		"NamespacePermissionLockdown": {
+			"_merge_strategy": "array_plus"
+		},
 		"SpecialPageLockdown": [],
 		"ActionLockdown": []
 	},
