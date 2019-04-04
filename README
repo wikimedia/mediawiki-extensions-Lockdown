@@ -10,7 +10,7 @@ namespaces and special pages to a given set of user groups. This provides
 a more fine grained security model than the one provided by the default
 $wgGroupPermissions and $wgNamespaceRestrictions settings.
 
-<http://mediawiki.org/wiki/Extension:Lockdown>
+<https://mediawiki.org/wiki/Extension:Lockdown>
 
 The Lockdown extension was originally written by Daniel Kinzler in 2007
 and is released under the GNU General Public Licence (GPL).
@@ -18,8 +18,8 @@ and is released under the GNU General Public Licence (GPL).
 The following pages about the security model used by MediaWiki per
 default may be helpful to understand the instructions below:
 
-* <http://www.mediawiki.org/wiki/Help:Managing_user_rights>
-* <http://www.mediawiki.org/wiki/Manual:$wgGroupPermissions>
+* <https://www.mediawiki.org/wiki/Help:Managing_user_rights>
+* <https://www.mediawiki.org/wiki/Manual:$wgGroupPermissions>
 
 
 == WARNING: restricting read access not fully possible ==
