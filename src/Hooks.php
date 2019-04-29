@@ -44,18 +44,8 @@ use WebRequest;
  */
 class Hooks {
 
-	// Shim to avoid deprecation notice while still being usable on 1.27
 	private static function getGroupLinks( $groups ) {
-		if ( method_exists( UserGroupMembership::class, 'getGroupName' ) ) {
-			$groupLinks = array_map(
-				[ 'UserGroupMembership', 'getGroupName' ], $groups
-			);
-		} else {
-			$groupLinks = array_map(
-				[ 'User', 'makeGroupLinkWiki' ], $groups
-			);
-		}
-		return $groupLinks;
+		return UserGroupMembership::getGroupName( $groups );
 	}
 
 	/**
