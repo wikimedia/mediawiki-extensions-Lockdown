@@ -37,6 +37,7 @@ use PermissionsError;
 use RequestContext;
 use Title;
 use User;
+use UserGroupMembership;
 use WebRequest;
 
 /**
@@ -45,7 +46,11 @@ use WebRequest;
 class Hooks {
 
 	private static function getGroupLinks( $groups ) {
-		return UserGroupMembership::getGroupName( $groups );
+		$names = [];
+		foreach ( $groups as $group ) {
+			$names[] = UserGroupMembership::getGroupName( $group );
+		}
+		return $names;
 	}
 
 	/**
