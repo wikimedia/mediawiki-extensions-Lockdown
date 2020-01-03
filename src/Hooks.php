@@ -269,10 +269,8 @@ class Hooks {
 		$searchterm,
 		Title $title = null
 	) {
-		global $wgUser;
-
 		if ( $title ) {
-			$ugroups = $wgUser->getEffectiveGroups();
+			$ugroups = RequestContext::getMain()->getUser()->getEffectiveGroups();
 			if ( !self::namespaceCheck( $title->getNamespace(), $ugroups ) ) {
 				$title = null;
 			}
