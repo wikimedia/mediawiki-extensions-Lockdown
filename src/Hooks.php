@@ -46,11 +46,13 @@ use WebRequest;
 class Hooks {
 
 	private static function getGroupLinks( $groups ) {
-		$names = [];
+		$links = [];
 		foreach ( $groups as $group ) {
-			$names[] = UserGroupMembership::getGroupName( $group );
+			$links[] = UserGroupMembership::getLink(
+				$group, RequestContext::getMain(), 'wiki'
+			);
 		}
-		return $names;
+		return $links;
 	}
 
 	/**
