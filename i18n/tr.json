@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
+			"MuratTheTurkish",
 			"Vito Genovese"
 		]
 	},
-	"lockdown-desc": "Alan adlarına göre grup izinleri"
+	"lockdown-desc": "Ad alanı grubu izinleri başına"
 }
