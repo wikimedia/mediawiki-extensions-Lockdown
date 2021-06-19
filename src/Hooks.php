@@ -32,6 +32,7 @@ namespace MediaWiki\Extensions\Lockdown;
 
 use Article;
 use MediaWiki;
+use MessageSpecifier;
 use OutputPage;
 use PermissionsError;
 use RequestContext;
@@ -127,18 +128,18 @@ class Hooks {
 			# group is allowed - keep processing
 			$result = null;
 			return true;
-		} else {
-			# group is denied - abort
-			$groupLinks = self::getGroupLinks( $groups );
-
-			$result = [
-				'badaccess-groups',
-				$wgLang->commaList( $groupLinks ),
-				count( $groups )
-			];
-
-			return false;
 		}
+
+		# group is denied - abort
+		$groupLinks = self::getGroupLinks( $groups );
+
+		$result = [
+			'badaccess-groups',
+			$wgLang->commaList( $groupLinks ),
+			count( $groups )
+		];
+
+		return false;
 	}
 
 	/**
@@ -183,17 +184,17 @@ class Hooks {
 
 		if ( $match ) {
 			return true;
-		} else {
-			$groupLinks = self::getGroupLinks( $groups );
-
-			$err = [
-				'badaccess-groups', $wgLang->commaList( $groupLinks ),
-				count( $groups )
-			];
-			throw new PermissionsError(
-				$request->getVal( 'action' ), [ $err ]
-			);
 		}
+
+		$groupLinks = self::getGroupLinks( $groups );
+
+		$err = [
+			'badaccess-groups', $wgLang->commaList( $groupLinks ),
+			count( $groups )
+		];
+		throw new PermissionsError(
+			$request->getVal( 'action' ), [ $err ]
+		);
 	}
 
 	/**
@@ -223,18 +224,13 @@ class Hooks {
 	protected static function namespaceGroups( $ns, $action = 'read' ) {
 		global $wgNamespacePermissionLockdown;
 
-		$groups = isset( $wgNamespacePermissionLockdown[$ns][$action] )
-				? $wgNamespacePermissionLockdown[$ns][$action]
-				: null;
+		$groups = $wgNamespacePermissionLockdown[$ns][$action] ?? null;
+
 		if ( $groups === null ) {
-			$groups = isset( $wgNamespacePermissionLockdown['*'][$action] )
-					? $wgNamespacePermissionLockdown['*'][$action]
-					: null;
+			$groups = $wgNamespacePermissionLockdown['*'][$action] ?? null;
 		}
 		if ( $groups === null ) {
-			$groups = isset( $wgNamespacePermissionLockdown[$ns]['*'] )
-					? $wgNamespacePermissionLockdown[$ns]['*']
-					: null;
+			$groups = $wgNamespacePermissionLockdown[$ns]['*'] ?? null;
 		}
 		if ( $groups === "*" ) {
 			$groups = null;
@@ -264,12 +260,12 @@ class Hooks {
 	 * required page. Will show a no such page message instead.
 	 *
 	 * @param string $searchterm the term being searched
-	 * @param Title|null $title Title the user is being sent to
+	 * @param Title|null &$title Title the user is being sent to
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SearchGetNearMatchComplete
 	 */
 	public static function onSearchGetNearMatchComplete(
 		$searchterm,
-		Title $title = null
+		Title &$title = null
 	) {
 		if ( $title ) {
 			$ugroups = RequestContext::getMain()->getUser()->getEffectiveGroups();

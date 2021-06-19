@@ -5,7 +5,7 @@ Licenses: GNU General Public Licence (GPL)
           GNU Free Documentation License (GFDL)
 --------------------------------------------------------------------------
 
-The Lockdown extension implements a way to retrict access to specific
+The Lockdown extension implements a way to restrict access to specific
 namespaces and special pages to a given set of user groups. This provides
 a more fine grained security model than the one provided by the default
 $wgGroupPermissions and $wgNamespaceRestrictions settings.
