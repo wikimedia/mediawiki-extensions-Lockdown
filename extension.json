@@ -8,7 +8,7 @@
 	],
 	"url": "https://www.mediawiki.org/wiki/Extension:Lockdown",
 	"requires": {
-		"MediaWiki": ">= 1.31.0"
+		"MediaWiki": ">= 1.35.0"
 	},
 	"descriptionmsg": "lockdown-desc",
 	"license-name": "GPL-2.0-or-later",
@@ -18,11 +18,19 @@
 			"i18n"
 		]
 	},
+	"HookHandlers": {
+		"default": {
+			"class": "MediaWiki\\Extensions\\Lockdown\\Hooks",
+			"services": [
+				"UserGroupManager"
+			]
+		}
+	},
 	"Hooks": {
-		"getUserPermissionsErrors": "MediaWiki\\Extensions\\Lockdown\\Hooks::onGetUserPermissionsErrors",
-		"MediaWikiPerformAction": "MediaWiki\\Extensions\\Lockdown\\Hooks::onMediawikiPerformAction",
-		"SearchableNamespaces": "MediaWiki\\Extensions\\Lockdown\\Hooks::onSearchableNamespaces",
-		"SearchGetNearMatchComplete": "MediaWiki\\Extensions\\Lockdown\\Hooks::onSearchGetNearMatchComplete"
+		"getUserPermissionsErrors": "default",
+		"MediaWikiPerformAction": "default",
+		"SearchableNamespaces": "default",
+		"SearchGetNearMatchComplete": "default"
 	},
 	"AutoloadClasses": {
 		"MediaWiki\\Extensions\\Lockdown\\Hooks": "src/Hooks.php"

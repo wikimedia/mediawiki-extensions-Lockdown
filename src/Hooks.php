@@ -32,6 +32,11 @@ namespace MediaWiki\Extensions\Lockdown;
 
 use Article;
 use MediaWiki;
+use MediaWiki\Hook\MediaWikiPerformActionHook;
+use MediaWiki\Permissions\Hook\GetUserPermissionsErrorsHook;
+use MediaWiki\Search\Hook\SearchableNamespacesHook;
+use MediaWiki\Search\Hook\SearchGetNearMatchCompleteHook;
+use MediaWiki\User\UserGroupManager;
 use MessageSpecifier;
 use OutputPage;
 use PermissionsError;
@@ -44,9 +49,25 @@ use WebRequest;
 /**
  * Holds the hooks for the Lockdown extension.
  */
-class Hooks {
+class Hooks implements
+	GetUserPermissionsErrorsHook,
+	MediaWikiPerformActionHook,
+	SearchableNamespacesHook,
+	SearchGetNearMatchCompleteHook
+{
+	/**
+	 * @var UserGroupManager
+	 */
+	private $userGroupManager;
 
-	private static function getGroupLinks( $groups ) {
+	/**
+	 * @param UserGroupManager $userGroupManager
+	 */
+	public function __construct( UserGroupManager $userGroupManager ) {
+		$this->userGroupManager = $userGroupManager;
+	}
+
+	private function getGroupLinks( $groups ) {
 		$links = [];
 		foreach ( $groups as $group ) {
 			$links[] = UserGroupMembership::getLink(
@@ -62,19 +83,14 @@ class Hooks {
 	 * @param Title $title being checked
 	 * @param User $user whose access is being checked
 	 * @param string $action being checked
-	 * @param MessageSpecifier|array|string|bool|null &$result User
+	 * @param array|string|MessageSpecifier &$result User
 	 *   permissions error to add. If none, return true. $result can be
 	 *   returned as a single error message key (string), or an array of
 	 *   error message keys when multiple messages are needed
 	 * @return bool
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/getUserPermissionsErrors
 	 */
-	public static function onGetUserPermissionsErrors(
-		Title $title,
-		User $user,
-		$action,
-		&$result = null
-	) {
+	public function onGetUserPermissionsErrors( $title, $user, $action, &$result ) {
 		global $wgSpecialPageLockdown, $wgWhitelistRead, $wgLang;
 
 		$result = null;
@@ -102,7 +118,7 @@ class Hooks {
 				break;
 			}
 		} else {
-			$groups = self::namespaceGroups( $ns, $action );
+			$groups = $this->namespaceGroups( $ns, $action );
 		}
 
 		if ( $groups === null ) {
@@ -120,7 +136,7 @@ class Hooks {
 			return false;
 		}
 
-		$ugroups = $user->getEffectiveGroups();
+		$ugroups = $this->userGroupManager->getUserEffectiveGroups( $user );
 
 		$match = array_intersect( $ugroups, $groups );
 
@@ -130,7 +146,7 @@ class Hooks {
 		}
 
 		# group is denied - abort
-		$groupLinks = self::getGroupLinks( $groups );
+		$groupLinks = $this->getGroupLinks( $groups );
 
 		$result = [
 			'badaccess-groups',
@@ -154,13 +170,13 @@ class Hooks {
 	 * @return bool
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/MediaWikiPerformAction
 	 */
-	public static function onMediawikiPerformAction(
-		OutputPage $output,
-		Article $article,
-		Title $title,
-		User $user,
-		WebRequest $request,
-		MediaWiki $wiki
+	public function onMediaWikiPerformAction(
+		$output,
+		$article,
+		$title,
+		$user,
+		$request,
+		$wiki
 	) {
 		global $wgActionLockdown, $wgLang;
 
@@ -178,14 +194,14 @@ class Hooks {
 			return false;
 		}
 
-		$ugroups = $user->getEffectiveGroups();
+		$ugroups = $this->userGroupManager->getUserEffectiveGroups( $user );
 		$match = array_intersect( $ugroups, $groups );
 
 		if ( $match ) {
 			return true;
 		}
 
-		$groupLinks = self::getGroupLinks( $groups );
+		$groupLinks = $this->getGroupLinks( $groups );
 
 		$err = [
 			'badaccess-groups', $wgLang->commaList( $groupLinks ),
@@ -200,14 +216,15 @@ class Hooks {
 	 * Filter out the namespaces that the user is locked out of
 	 *
 	 * @param array &$searchableNs Is filled with searchable namespaces
+	 * @return void
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SearchableNamespaces
 	 */
-	public static function onSearchableNamespaces( array &$searchableNs ) {
+	public function onSearchableNamespaces( &$searchableNs ) {
 		$user = RequestContext::getMain()->getUser();
-		$ugroups = $user->getEffectiveGroups();
+		$ugroups = $this->userGroupManager->getUserEffectiveGroups( $user );
 
 		foreach ( $searchableNs as $ns => $name ) {
-			if ( !self::namespaceCheck( $ns, $ugroups ) ) {
+			if ( !$this->namespaceCheck( $ns, $ugroups ) ) {
 				unset( $searchableNs[$ns] );
 			}
 		}
@@ -220,7 +237,7 @@ class Hooks {
 	 * @param string $action to check (default: read)
 	 * @return null|array of groups
 	 */
-	protected static function namespaceGroups( $ns, $action = 'read' ) {
+	protected function namespaceGroups( $ns, $action = 'read' ) {
 		global $wgNamespacePermissionLockdown;
 
 		$groups = $wgNamespacePermissionLockdown[$ns][$action] ?? null;
@@ -245,8 +262,8 @@ class Hooks {
 	 * @param array $ugroups that the user is in
 	 * @return bool false if the user does not have permission
 	 */
-	protected static function namespaceCheck( $ns, array $ugroups ) {
-		$groups = self::namespaceGroups( $ns );
+	protected function namespaceCheck( $ns, array $ugroups ) {
+		$groups = $this->namespaceGroups( $ns );
 		if ( is_array( $groups ) && !array_intersect( $ugroups, $groups ) ) {
 			return false;
 		}
@@ -260,15 +277,13 @@ class Hooks {
 	 *
 	 * @param string $searchterm the term being searched
 	 * @param Title|null &$title Title the user is being sent to
+	 * @return void
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/SearchGetNearMatchComplete
 	 */
-	public static function onSearchGetNearMatchComplete(
-		$searchterm,
-		Title &$title = null
-	) {
+	public function onSearchGetNearMatchComplete( $searchterm, &$title ) {
 		if ( $title ) {
-			$ugroups = RequestContext::getMain()->getUser()->getEffectiveGroups();
-			if ( !self::namespaceCheck( $title->getNamespace(), $ugroups ) ) {
+			$ugroups = $this->userGroupManager->getUserEffectiveGroups( RequestContext::getMain()->getUser() );
+			if ( !$this->namespaceCheck( $title->getNamespace(), $ugroups ) ) {
 				$title = null;
 			}
 		}
