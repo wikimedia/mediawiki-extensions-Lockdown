@@ -126,7 +126,6 @@ class Hooks {
 
 		if ( $match ) {
 			# group is allowed - keep processing
-			$result = null;
 			return true;
 		}
 
