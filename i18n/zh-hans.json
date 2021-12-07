@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"PhiLiP"
+			"PhiLiP",
+			"Xiplus"
 		]
 	},
-	"lockdown-desc": "按名字空间的用户组权限"
+	"lockdown-desc": "按命名空间的用户组权限"
 }
