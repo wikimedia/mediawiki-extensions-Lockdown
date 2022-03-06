@@ -28,7 +28,7 @@
  * @author Mark A. Hershberger <mah@nichework.com>
  * @license GPL-2.0-or-later
  */
-namespace MediaWiki\Extensions\Lockdown;
+namespace MediaWiki\Extension\Lockdown;
 
 use Article;
 use MediaWiki;

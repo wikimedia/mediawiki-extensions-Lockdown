@@ -20,7 +20,7 @@
 	},
 	"HookHandlers": {
 		"default": {
-			"class": "MediaWiki\\Extensions\\Lockdown\\Hooks",
+			"class": "MediaWiki\\Extension\\Lockdown\\Hooks",
 			"services": [
 				"UserGroupManager"
 			]
@@ -33,7 +33,7 @@
 		"SearchGetNearMatchComplete": "default"
 	},
 	"AutoloadClasses": {
-		"MediaWiki\\Extensions\\Lockdown\\Hooks": "src/Hooks.php"
+		"MediaWiki\\Extension\\Lockdown\\Hooks": "src/Hooks.php"
 	},
 	"config": {
 		"NamespacePermissionLockdown": {
