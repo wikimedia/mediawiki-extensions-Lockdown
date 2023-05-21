@@ -70,9 +70,7 @@ class Hooks implements
 	private function getGroupLinks( $groups ) {
 		$links = [];
 		foreach ( $groups as $group ) {
-			$links[] = UserGroupMembership::getLink(
-				$group, RequestContext::getMain(), 'wiki'
-			);
+			$links[] = UserGroupMembership::getLinkWiki( $group, RequestContext::getMain() );
 		}
 		return $links;
 	}
