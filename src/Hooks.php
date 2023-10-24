@@ -67,7 +67,11 @@ class Hooks implements
 		$this->userGroupManager = $userGroupManager;
 	}
 
-	private function getGroupLinks( $groups ) {
+	/**
+	 * @param array $groups
+	 * @return array
+	 */
+	private function getGroupLinks( array $groups ) {
 		$links = [];
 		foreach ( $groups as $group ) {
 			$links[] = UserGroupMembership::getLinkWiki( $group, RequestContext::getMain() );
