@@ -31,7 +31,7 @@
 namespace MediaWiki\Extension\Lockdown;
 
 use Article;
-use MediaWiki;
+use MediaWiki\Actions\ActionEntryPoint;
 use MediaWiki\Hook\MediaWikiPerformActionHook;
 use MediaWiki\Permissions\Hook\GetUserPermissionsErrorsHook;
 use MediaWiki\Search\Hook\SearchableNamespacesHook;
@@ -168,7 +168,7 @@ class Hooks implements
 	 * @param Title $title n/a
 	 * @param User $user whose groups we will check
 	 * @param WebRequest $request used to get the raw action
-	 * @param MediaWiki $wiki used to get the parsed action
+	 * @param ActionEntryPoint $wiki used to get the parsed action
 	 * @return bool
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/MediaWikiPerformAction
 	 */
