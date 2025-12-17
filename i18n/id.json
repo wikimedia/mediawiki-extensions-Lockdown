@@ -1,8 +1,9 @@
 {
 	"@metadata": {
 		"authors": [
-			"Bennylin"
+			"Bennylin",
+			"Penyuwangi"
 		]
 	},
-	"lockdown-desc": "Per hak akses grup ruang nama"
+	"lockdown-desc": "Izin per kelompok ruang nama"
 }
