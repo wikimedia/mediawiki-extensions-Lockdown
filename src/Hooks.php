@@ -93,7 +93,7 @@ class Hooks implements
 	 * @see https://www.mediawiki.org/wiki/Manual:Hooks/getUserPermissionsErrors
 	 */
 	public function onGetUserPermissionsErrors( $title, $user, $action, &$result ) {
-		global $wgSpecialPageLockdown, $wgWhitelistRead, $wgLang;
+		global $wgSpecialPageLockdown, $wgWhitelistRead;
 
 		$result = null;
 
@@ -152,7 +152,7 @@ class Hooks implements
 
 		$result = [
 			'badaccess-groups',
-			$wgLang->commaList( $groupLinks ),
+			RequestContext::getMain()->getLanguage()->commaList( $groupLinks ),
 			count( $groups )
 		];
 
@@ -180,7 +180,7 @@ class Hooks implements
 		$request,
 		$wiki
 	) {
-		global $wgActionLockdown, $wgLang;
+		global $wgActionLockdown;
 
 		$action = $wiki->getAction();
 
@@ -206,7 +206,8 @@ class Hooks implements
 		$groupLinks = $this->getGroupLinks( $groups );
 
 		$err = [
-			'badaccess-groups', $wgLang->commaList( $groupLinks ),
+			'badaccess-groups',
+			$output->getLanguage()->commaList( $groupLinks ),
 			count( $groups )
 		];
 		throw new PermissionsError(
